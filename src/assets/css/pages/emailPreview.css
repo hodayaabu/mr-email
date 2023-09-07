@@ -1,0 +1,12 @@
+.email-preview {
+    border: 1px solid black;
+}
+
+.is-read {
+    font-weight: bold;
+}
+
+.subject,
+.body {
+    display: inline;
+}
