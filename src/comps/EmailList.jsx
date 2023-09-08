@@ -6,11 +6,11 @@ export function EmailList({ emails, onRemove }) {
     return (
         <ul className="email-list">
             {
-                emails.map(email => <li key={email.id}>
+                emails.map(email => <li className="list-item" key={email.id}>
                     <EmailPreview email={email} />
-                    <div className="email-actions">
+                    <p className="email-actions">
                         <button onClick={() => onRemove(email.id)}>X</button>
-                    </div>
+                    </p>
                 </li>)
             }
         </ul>

@@ -7,6 +7,7 @@ export function EmailPreview({ email }) {
 
     return <article className={"email-preview " + dynClass}>
         <Link to={`/email/${id}`}>
+            <p className="from">{email.from}</p>
             <h2 className="subject">{subject}</h2>
             <p className="body">{body}</p>
         </Link>

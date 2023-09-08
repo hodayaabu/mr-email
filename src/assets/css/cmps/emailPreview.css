@@ -1,12 +1,16 @@
 .email-preview {
     border: 1px solid black;
+    border-right: none;
+    width: 100%;
 }
 
 .is-read {
     font-weight: bold;
 }
 
+.from,
 .subject,
 .body {
     display: inline;
+    margin: 1.5%;
 }

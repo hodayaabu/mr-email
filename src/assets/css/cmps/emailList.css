@@ -1,0 +1,11 @@
+.email-list {}
+
+.list-item {
+    text-decoration: none !important;
+    display: flex;
+
+}
+
+.email-actions {
+    display: flex;
+}

@@ -18,28 +18,28 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     }
 
     return <form className="email-filter" onSubmit={onSubmitFilter}>
-        <label htmlFor="subject">Subject</label>
+        <label htmlFor="subject">Subject:</label>
         <input type="text" id="subject"
             placeholder="Search by subject"
             name="subject"
             onChange={handleChange}
             value={filterByToEdit.subject} />
 
-        <label htmlFor="from">From</label>
+        <label htmlFor="from">From:</label>
         <input type="text" id="from"
             placeholder="Search by from"
             name="from"
             onChange={handleChange}
             value={filterByToEdit.from} />
 
-        <label htmlFor="to">To</label>
+        <label htmlFor="to">To:</label>
         <input type="text" id="to"
             placeholder="Search by to"
             name="to"
             onChange={handleChange}
             value={filterByToEdit.to} />
 
-        <label htmlFor="body">Description</label>
+        <label htmlFor="body">Description:</label>
         <input type="text" id="body"
             placeholder="Search by body"
             name="body"
