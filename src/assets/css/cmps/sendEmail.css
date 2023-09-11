@@ -1,0 +1,48 @@
+/* .open {
+    display: block;
+} */
+
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    background-color: darkgray;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+.modal-section {
+    margin: 1%;
+}
+
+.modal-subject,
+.modal-description {
+    width: 100%;
+}
+
+textarea {
+    height: 108px;
+}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 2px 16px;
+    background-color: darkgray;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    position: absolute;
+    bottom: 5%;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}

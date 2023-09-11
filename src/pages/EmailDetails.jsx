@@ -14,7 +14,9 @@ export function EmailDetails() {
 
     async function loadEmail() {
         try {
-            const email = await emailService.getById(params.emailId)
+            let email = await emailService.getById(params.emailId)
+            email = { ...email, isRead: true }
+            await emailService.save(email)
             setEmail(email)
         } catch (err) {
             navigate('/emails')
@@ -22,9 +24,11 @@ export function EmailDetails() {
         }
     }
 
+
     if (!email) return <div>Loading..</div>
     return (
         <section className="email-details">
+            <span className="date">{new Date(email.sentAt).toLocaleDateString()}</span>
             <h1>{email.subject}</h1>
             <h5>{email.from}</h5>
             <p>{email.body}</p>

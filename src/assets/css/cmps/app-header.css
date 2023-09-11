@@ -27,3 +27,5 @@
 .app-header section.container>section {
     flex-grow: 1;
 }
+
+.navbar {}

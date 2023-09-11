@@ -4,8 +4,21 @@
     width: 100%;
 }
 
+.un-read {
+    font-weight: 650;
+}
+
 .is-read {
-    font-weight: bold;
+    font-weight: normal;
+}
+
+.from,
+.subject {
+    font-size: large;
+}
+
+.body {
+    font-size: smaller;
 }
 
 .from,
@@ -13,4 +26,9 @@
 .body {
     display: inline;
     margin: 1.5%;
+}
+
+.date {
+    float: right;
+    margin-right: 2%;
 }

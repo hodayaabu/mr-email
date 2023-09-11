@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { emailService } from "../services/emails.service";
 import { EmailList } from "../comps/EmailList";
 import { EmailFilter } from "../comps/EmailFilter";
+import { SendEmail } from '../comps/SendEmail';
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -14,6 +15,13 @@ export function EmailIndex() {
 
     function onSetFilter(fieldsToUpdate) {
         setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }))
+    }
+
+    function countUnReadEmails() {
+        const unReadEmails = emails.filter(email =>
+            email.isRead === false
+        )
+        return (unReadEmails.length)
     }
 
     async function loadEmails() {
@@ -34,11 +42,22 @@ export function EmailIndex() {
         }
     }
 
+    async function onSendEmail(newEmail) {
+        try {
+            await emailService.save(newEmail)
+            await loadEmails()
+        } catch (err) {
+            console.log('Had issues sending email', err);
+        }
+    }
+
     if (!emails) return <div>Loading..</div>
     return (
         <div className="container">
+            {countUnReadEmails()} un read emails
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
             <EmailList emails={emails} onRemove={onRemoveEmail} />
+            <SendEmail onSendEmail={onSendEmail} />
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
@@ -9,7 +10,12 @@ export function EmailFilter({ filterBy, onSetFilter }) {
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
+
+        if (field === 'isRead' || field === 'sendAt') {
+            value = JSON.parse(value)
+        }
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+        console.log(value);
     }
 
     function onSubmitFilter(ev) {
@@ -17,35 +23,55 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         onSetFilter(filterByToEdit)
     }
 
-    return <form className="email-filter" onSubmit={onSubmitFilter}>
-        <label htmlFor="subject">Subject:</label>
-        <input type="text" id="subject"
-            placeholder="Search by subject"
-            name="subject"
-            onChange={handleChange}
-            value={filterByToEdit.subject} />
+    return <>
+        <form className="email-filter" onSubmit={onSubmitFilter}>
 
-        <label htmlFor="from">From:</label>
-        <input type="text" id="from"
-            placeholder="Search by from"
-            name="from"
-            onChange={handleChange}
-            value={filterByToEdit.from} />
+            <div className="sortRead">
+                <select name='isRead' onChange={handleChange} >
+                    <option>Sort By:</option>
+                    <option value='true'>Read Emails</option>
+                    <option value='false'>UnRead Emails</option>
+                    <option value='null'>All</option>
+                </select>
+            </div>
 
-        <label htmlFor="to">To:</label>
-        <input type="text" id="to"
-            placeholder="Search by to"
-            name="to"
-            onChange={handleChange}
-            value={filterByToEdit.to} />
+            <div className="sortDate">
+                <select name='sendAt' onChange={handleChange} >
+                    <option>Sort By Date:</option>
+                    <option value="true">new to old</option>
+                    <option value="false">old to new</option>
+                </select>
+            </div>
 
-        <label htmlFor="body">Description:</label>
-        <input type="text" id="body"
-            placeholder="Search by body"
-            name="body"
-            onChange={handleChange}
-            value={filterByToEdit.body} />
+            <label htmlFor="subject">Subject:</label>
+            <input type="text" id="subject"
+                placeholder="Search by subject"
+                name="subject"
+                onChange={handleChange}
+                value={filterByToEdit.subject} />
 
-        <button>Filter</button>
-    </form>
+            <label htmlFor="from">From:</label>
+            <input type="text" id="from"
+                placeholder="Search by from"
+                name="from"
+                onChange={handleChange}
+                value={filterByToEdit.from} />
+
+            <label htmlFor="to">To:</label>
+            <input type="text" id="to"
+                placeholder="Search by to"
+                name="to"
+                onChange={handleChange}
+                value={filterByToEdit.to} />
+
+            <label htmlFor="body">Description:</label>
+            <input type="text" id="body"
+                placeholder="Search by description"
+                name="body"
+                onChange={handleChange}
+                value={filterByToEdit.body} />
+
+            <button>Filter</button>
+        </form>
+    </>
 }
