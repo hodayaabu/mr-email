@@ -29,32 +29,31 @@ export function SendEmail({ onSendEmail }) {
     return <>
         <div className="container">
 
-            <button onClick={handleOpen}>New Email</button>
+            <button className="new-email" onClick={handleOpen}>New Email</button>
 
             <Modal className="modal-content" show={show}>
-                <form onSubmit={handleSendEmail}>
 
-                    <div className="modal-header">
-                        <label htmlFor="to">To:</label>
-                        <input type="text" name="to" value={newEmail.to} placeholder="memo@memo.com" onChange={handleChange} />
-                    </div>
+                <div className="modal-header">
+                    <button className="btn-close" onClick={handleClose}>x</button >
+                    <p>New Message</p>
+                </div>
 
-                    <div className="modal-body">
-                        <section className="modal-section">
-                            <label htmlFor="subject">Subject:</label>
-                            <input className="modal-subject" id="subject" type="text" name="subject" value={newEmail.subject} onChange={handleChange} />
-                        </section>
+                <div className="modal-body">
+                    <label htmlFor="to">To:</label>
+                    <input className="modal-to" type="text" name="to" value={newEmail.to} placeholder="memo@memo.com" onChange={handleChange} />
+                    <section className="modal-section">
+                        <label htmlFor="subject">Subject:</label>
+                        <input className="modal-subject" id="subject" type="text" name="subject" value={newEmail.subject} onChange={handleChange} />
+                    </section>
 
-                        <section className="modal-section">
-                            <label htmlFor="body">Description:</label>
-                            <textarea className="modal-description" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
-                        </section>
-                    </div>
+                    <section className="modal-section">
+                        <textarea className="modal-description" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
+                    </section>
+                </div>
 
-                    <div className="modal-footer">
-                        <button>send</button>
-                    </div>
-                </form>
+                <div className="modal-footer">
+                    <button className="btn-send" onClick={handleSendEmail}>send</button>
+                </div>
             </Modal>
         </div >
 

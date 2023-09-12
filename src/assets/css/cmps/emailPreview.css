@@ -1,7 +1,19 @@
 .email-preview {
-    border: 1px solid black;
     border-right: none;
+    border-bottom: 0.4px solid gray;
     width: 100%;
+    height: 30px;
+    background-color: white;
+    opacity: 0.7;
+}
+
+/* rgb(139, 139, 236) */
+.email-preview:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.wrapper-link:hover {
+    text-decoration: none;
 }
 
 .un-read {

@@ -4,10 +4,9 @@ export function AppHeader() {
     return (
         <header className="app-header">
             <section className="container">
-                <h1>MisterEmail</h1>
-            </section>
-            <section className="navbar">
-                <nav>
+                <h1 className="header">MisterEmail</h1>
+
+                <nav className="navbar">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/emails">Emails</NavLink>

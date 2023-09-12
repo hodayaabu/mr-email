@@ -26,22 +26,13 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     return <>
         <form className="email-filter" onSubmit={onSubmitFilter}>
 
-            <div className="sortRead">
-                <select name='isRead' onChange={handleChange} >
-                    <option>Sort By:</option>
-                    <option value='true'>Read Emails</option>
-                    <option value='false'>UnRead Emails</option>
-                    <option value='null'>All</option>
-                </select>
-            </div>
-
-            <div className="sortDate">
+            {/* <div className="sortDate">
                 <select name='sendAt' onChange={handleChange} >
                     <option>Sort By Date:</option>
                     <option value="true">new to old</option>
                     <option value="false">old to new</option>
                 </select>
-            </div>
+            </div> */}
 
             <label htmlFor="subject">Subject:</label>
             <input type="text" id="subject"
@@ -71,7 +62,14 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 onChange={handleChange}
                 value={filterByToEdit.body} />
 
-            <button>Filter</button>
+            <div className="sortRead">
+                <select name='isRead' onChange={handleChange} >
+                    <option>Sort By:</option>
+                    <option value='true'>Read Emails</option>
+                    <option value='false'>UnRead Emails</option>
+                    <option value='null'>All</option>
+                </select>
+            </div>
         </form>
     </>
 }

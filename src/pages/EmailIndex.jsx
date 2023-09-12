@@ -54,10 +54,10 @@ export function EmailIndex() {
     if (!emails) return <div>Loading..</div>
     return (
         <div className="container">
-            {countUnReadEmails()} un read emails
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            <EmailList emails={emails} onRemove={onRemoveEmail} />
+            {countUnReadEmails()} un read emails
             <SendEmail onSendEmail={onSendEmail} />
+            <EmailList emails={emails} onRemove={onRemoveEmail} />
         </div>
     )
 }

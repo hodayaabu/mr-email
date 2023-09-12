@@ -1,4 +1,7 @@
-.email-list {}
+.email-list {
+    border-radius: 4%;
+    margin-top: 50px;
+}
 
 .list-item {
     text-decoration: none !important;
