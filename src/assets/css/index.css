@@ -13,4 +13,5 @@
 @import "./cmps/emailPreview.css";
 @import "./cmps/emailList.css";
 @import "./cmps/email-filter.css";
-@import "./cmps//sendEmail.css";
+@import "./cmps/email-compose.css";
+@import "./cmps/email-folders.css";

@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { emailService } from "../services/emails.service";
 import { EmailList } from "../comps/EmailList";
 import { EmailFilter } from "../comps/EmailFilter";
-import { SendEmail } from '../comps/SendEmail';
+import { Outlet } from "react-router";
+import { EmailFolders } from "../comps/EmailFolders";
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
@@ -15,13 +16,6 @@ export function EmailIndex() {
 
     function onSetFilter(fieldsToUpdate) {
         setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }))
-    }
-
-    function countUnReadEmails() {
-        const unReadEmails = emails.filter(email =>
-            email.isRead === false
-        )
-        return (unReadEmails.length)
     }
 
     async function loadEmails() {
@@ -51,13 +45,21 @@ export function EmailIndex() {
         }
     }
 
+    async function onUpdateEmail(email) {
+        try {
+            const updatedEmail = await emailService.save(email);
+            setEmails(prevEmails => prevEmails.map(email => email.id === updatedEmail.id ? updatedEmail : email))
+        } catch (err) {
+            console.log('Had issues updating email', err);
+        }
+    }
     if (!emails) return <div>Loading..</div>
     return (
         <div className="container">
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            {countUnReadEmails()} un read emails
-            <SendEmail onSendEmail={onSendEmail} />
-            <EmailList emails={emails} onRemove={onRemoveEmail} />
+            <EmailFolders emails={emails} />
+            <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />
+            <Outlet context={{ onSendEmail }} />
         </div>
     )
 }
