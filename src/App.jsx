@@ -6,6 +6,7 @@ import { EmailIndex } from './pages/EmailIndex';
 import { AppHeader } from './comps/AppHeader';
 import { EmailDetails } from './pages/EmailDetails';
 import { EmailCompose } from './comps/EmailCompose';
+import { UserMsg } from './comps/UserMsg';
 
 export function App() {
 
@@ -28,7 +29,7 @@ export function App() {
                         <Route path="/emails/:folderName/:emailId" element={<EmailDetails />} />
                     </Routes>
                 </main>
-
+                <UserMsg />
                 <footer>
                     <section className="container">
                         robotRights 2023 &copy;

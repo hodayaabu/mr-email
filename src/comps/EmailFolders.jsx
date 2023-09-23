@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const buttons = [
   { id: 1, name: "Inbox", img: "../../public/imgs/inbox.png" },
   { id: 2, name: "Starred", img: "../../public/imgs/star_baseline.png" },
@@ -22,7 +23,7 @@ export function EmailFolders({ emails, onComposeClick }) {
   }
 
   useEffect(() => {
-    setActive(1);
+    setActive("inbox");
   }, []);
 
   return (

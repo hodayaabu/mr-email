@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 
+//icons
 import star from "../../public/imgs/star_baseline.png";
 import fillStar from "../../public/imgs/star_fil.png";
 
 export function EmailPreview({ email, onUpdateEmail }) {
     const { id, from, subject, body, isRead, isStarred, sentAt } = email
     const params = useParams()
-
     const readUaRead = isRead ? 'is-read' : 'un-read'
 
     function onToggle(field) {

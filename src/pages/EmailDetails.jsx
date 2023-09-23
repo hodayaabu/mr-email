@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router"
 
+//Services
 import { utilService } from "../services/util.service";
 import { emailService } from "../services/emails.service";
+import { showErrorMsg } from "../services/event-bus.service";
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -26,6 +28,7 @@ export function EmailDetails() {
             setEmail(email)
         } catch (err) {
             handleGoBack()
+            showErrorMsg('Had issues loading email');
             console.log('Had issues loading email', err);
         }
     }

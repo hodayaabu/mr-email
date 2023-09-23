@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react"
+import { useParams, Outlet, useNavigate } from "react-router";
 
+//services
 import { emailService } from "../services/emails.service";
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
+
+//components
 import { EmailList } from "../comps/EmailList";
 import { EmailFilter } from "../comps/EmailFilter";
-import { useParams, Outlet, useNavigate } from "react-router";
 import { EmailFolders } from "../comps/EmailFolders";
 
 export function EmailIndex() {
@@ -38,6 +42,7 @@ export function EmailIndex() {
             const emails = await emailService.query(filterBy)
             setEmails(emails)
         } catch (err) {
+            showErrorMsg('Had issues loading emails')
             console.log('Had issues loading emails', err);
         }
     }
@@ -49,15 +54,19 @@ export function EmailIndex() {
             if (email.removedAt) {
                 await emailService.remove(emailId)
                 setEmails((prevEmails) => prevEmails.filter(email => email.id !== emailId))
+                showSuccessMsg('Successfully deleted')
+            } else {
+                const newEmail = {
+                    ...email,
+                    removedAt: Date.now()
+                }
+                await emailService.save(newEmail);
+                setEmails((prevEmails) => prevEmails.filter(email => email.id !== emailId))
+                showSuccessMsg('removed to bin')
             }
-            const newEmail = {
-                ...email,
-                removedAt: Date.now()
-            }
-            await emailService.save(newEmail);
-            setEmails((prevEmails) => prevEmails.filter(email => email.id !== emailId))
         } catch (err) {
             console.log('Had issues remove email to bin emails', err);
+            showErrorMsg('Had issues remove email to bin emails');
         }
     }
 
@@ -65,8 +74,10 @@ export function EmailIndex() {
         try {
             await emailService.save(newEmail)
             await loadEmails()
+            showSuccessMsg('Email sent successfully')
         } catch (err) {
             console.log('Had issues sending email', err);
+            showErrorMsg('Had issues sending email');
         }
     }
 
@@ -76,6 +87,7 @@ export function EmailIndex() {
             setEmails(prevEmails => prevEmails.map(email => email.id === updatedEmail.id ? updatedEmail : email))
         } catch (err) {
             console.log('Had issues updating email', err);
+            showErrorMsg('Had issues updating email');
         }
     }
 

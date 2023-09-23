@@ -1,7 +1,7 @@
 import { EmailPreview } from "./EmailPreview";
 
+//icon
 import trash from "../../public/imgs/trash.png";
-
 
 export function EmailList({ emails, onRemove, onUpdateEmail }) {
 

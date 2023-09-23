@@ -1,11 +1,14 @@
 import { useState } from "react"
-import { emailService } from "../services/emails.service"
 import { useLocation, useNavigate, useOutletContext } from "react-router"
+
+//Services
+import { emailService } from "../services/emails.service"
 import { utilService } from "../services/util.service.js"
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
     const { onSendEmail } = useOutletContext()
+
     const location = useLocation()
     const navigate = useNavigate()
 
