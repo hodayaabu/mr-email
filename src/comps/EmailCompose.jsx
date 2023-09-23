@@ -1,13 +1,17 @@
 import { useState } from "react"
 import { emailService } from "../services/emails.service"
-import { useNavigate, useOutletContext } from "react-router"
-import { Link } from "react-router-dom"
+import { useLocation, useNavigate, useOutletContext } from "react-router"
+import { utilService } from "../services/util.service.js"
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
     const { onSendEmail } = useOutletContext()
+    const location = useLocation()
     const navigate = useNavigate()
 
+    function handleClose() {
+        navigate(utilService.getContainingFolder(location.pathname))
+    }
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -17,9 +21,11 @@ export function EmailCompose() {
     function handleSendEmail(ev) {
         ev.preventDefault()
         onSendEmail(newEmail)
-        navigate('/emails')
+        handleClose()
         setNewEmail(emailService.createEmail())
     }
+
+
 
     return <>
         <div className="container">
@@ -28,9 +34,7 @@ export function EmailCompose() {
             <form className="modal-content" onSubmit={handleSendEmail}>
 
                 <div className="modal-header">
-                    <Link to='/emails'>
-                        <button className="btn-close">x</button >
-                    </Link>
+                    <button onClick={handleClose} className="btn-close">x</button >
                     <p>New Message</p>
                 </div>
 

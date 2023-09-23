@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import star from "../../public/imgs/star_baseline.png";
 import fillStar from "../../public/imgs/star_fil.png";
 
 export function EmailPreview({ email, onUpdateEmail }) {
     const { id, from, subject, body, isRead, isStarred, sentAt } = email
+    const params = useParams()
 
     const readUaRead = isRead ? 'is-read' : 'un-read'
 
@@ -25,7 +26,7 @@ export function EmailPreview({ email, onUpdateEmail }) {
                 <img className="star-img" src={star} />
             )}
         </span>
-        <Link className="wrapper-link" to={`/email/${id}`}>
+        <Link className="wrapper-link" to={`/emails/${params.folderName}/${id}`}>
             <p className={"from " + readUaRead}>{from.split('@')[0]}</p>
             <p className={"subject " + readUaRead}>{subject}</p>
             <p className="body">- {body.split('.')[0]}</p>

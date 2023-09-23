@@ -2,7 +2,8 @@
 export const utilService = {
     makeId,
     saveToStorage,
-    loadFromStorage
+    loadFromStorage,
+    getContainingFolder
 }
 
 function makeId(length = 5) {
@@ -21,4 +22,8 @@ function saveToStorage(key, value) {
 function loadFromStorage(key, defaultValue = null) {
     var value = localStorage[key] || defaultValue;
     return JSON.parse(value);
+}
+
+function getContainingFolder(path) {
+    return path.split('/').slice(0, 3).join('/')
 }

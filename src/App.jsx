@@ -22,10 +22,10 @@ export function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/about' element={<About />} />
-                        <Route path='/emails' element={<EmailIndex />}>
-                            <Route path='/emails/newEmail' element={<EmailCompose />} />
+                        <Route path='/emails/:folderName' element={<EmailIndex />}>
+                            <Route path='/emails/:folderName/newEmail' element={<EmailCompose />} />
                         </Route>
-                        <Route path="/email/:emailId" element={<EmailDetails />} />
+                        <Route path="/emails/:folderName/:emailId" element={<EmailDetails />} />
                     </Routes>
                 </main>
 

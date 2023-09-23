@@ -53,7 +53,6 @@ input:focus {
     justify-content: space-evenly;
     width: 40px;
     height: 40px;
-    /* border: 1px solid green; */
     margin-left: 5px;
     border-radius: 50%;
 }

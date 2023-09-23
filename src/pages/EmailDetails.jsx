@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router"
+import { useLocation, useNavigate, useParams } from "react-router"
+
+import { utilService } from "../services/util.service";
 import { emailService } from "../services/emails.service";
-import { Link } from "react-router-dom";
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         loadEmail()
     }, [params.emailId])
+
+    function handleGoBack() {
+        navigate(utilService.getContainingFolder(location.pathname))
+    }
 
     async function loadEmail() {
         try {
@@ -19,7 +25,7 @@ export function EmailDetails() {
             await emailService.save(email)
             setEmail(email)
         } catch (err) {
-            navigate('/emails')
+            handleGoBack()
             console.log('Had issues loading email', err);
         }
     }
@@ -32,7 +38,7 @@ export function EmailDetails() {
             <h1>{email.subject}</h1>
             <h5>{email.from}</h5>
             <p>{email.body}</p>
-            <Link to="/emails">Go back</Link>
+            <button onClick={handleGoBack}>Go back</button>
 
         </section>
     )

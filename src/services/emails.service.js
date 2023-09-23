@@ -10,13 +10,23 @@ export const emailService = {
     getDefaultFilter
 }
 
+const loggedinUser = {
+    email: 'hodaya1abu@gmail.com',
+    fullname: 'Hodaya Abu',
+}
+
 const STORAGE_KEY = 'emails'
+
+function getLoggedInUser() {
+    return loggedinUser
+}
 
 _createEmails()
 
 async function query(filterBy) {
+
     let emails = await storageService.query(STORAGE_KEY)
-    var { subject, body, from, to, isRead, sendAt } = filterBy
+    var { subject, body, from, to, isRead, sendAt, folder } = filterBy
 
     if (filterBy) {
         emails = emails.filter(email =>
@@ -39,6 +49,31 @@ async function query(filterBy) {
     if (sendAt === false) {
         emails = emails.sort((a, b) => (a.sendAt) - (b.sendAt)).slice(0, 14)
     }
+
+    if (folder) {
+        emails = emails.filter((email) => {
+
+            switch (folder) {
+                case 'inbox':
+                    return (
+                        email.to == getLoggedInUser().email
+                    )
+                case 'sent':
+                    return (
+                        email.sentAt !== null &&
+                        email.from == getLoggedInUser().email
+                    )
+                case 'drafts':
+                    return email.sentAt == null
+                case 'all':
+                    return email.sentAt != null
+                case 'starred':
+                    return email.isStarred
+                case 'bin':
+                    return email.removedAt !== null
+            }
+        })
+    }
     return emails
 }
 
@@ -58,7 +93,7 @@ function save(emailToSave) {
     }
 }
 
-function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), from = "you", to = "") {
+function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), removedAt, to = "") {
     const email = {
         id,
         subject,
@@ -66,8 +101,8 @@ function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), from
         isRead: true,
         isStarred: false,
         sentAt,
-        removedAt: null, //for later use
-        from,
+        removedAt,
+        from: loggedinUser.email,
         to,
     }
     return email
@@ -80,7 +115,8 @@ function getDefaultFilter() {
         from: '',
         to: '',
         sendAt: null,
-        isRead: null
+        isRead: null,
+        folder: 'all'
     }
 }
 
@@ -98,7 +134,7 @@ function _createEmails() {
                 sentAt: 1551133930594,
                 removedAt: null, //for later use
                 from: 'hodaya@gmail.com',
-                to: 'user@appsus.com'
+                to: 'hodaya1abu@gmail.com'
             },
             {
                 id: utilService.makeId(),
@@ -109,7 +145,7 @@ function _createEmails() {
                 sentAt: 1551133930594,
                 removedAt: null, //for later use
                 from: 'shay@gmail.com',
-                to: 'user@appsus.com'
+                to: 'hodaya1abu@gmail.com'
             },
             {
                 id: utilService.makeId(),
@@ -120,7 +156,7 @@ function _createEmails() {
                 sentAt: 15511339305999,
                 removedAt: null, //for later use
                 from: 'momo@momo.com',
-                to: 'user@appsus.com'
+                to: 'hodaya1abu@gmail.com'
             },
 
         ]
