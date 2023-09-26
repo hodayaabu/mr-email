@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
     const [searchParams, setSearchParams] = useSearchParams()
+    const [viewMode, setViewMode] = useState('normal')
 
     const to = searchParams.get('to');
     const subject = searchParams.get('subject');
@@ -19,6 +20,7 @@ export function EmailCompose() {
 
     const location = useLocation()
     const navigate = useNavigate()
+
 
     useEffect(() => {
         loadEmail()
@@ -42,6 +44,7 @@ export function EmailCompose() {
     }
 
     function handleClose() {
+        onSaveDraft()
         navigate(utilService.getContainingFolder(location.pathname))
     }
 
@@ -54,9 +57,9 @@ export function EmailCompose() {
         ev.preventDefault()
         const emailToSend = { ...newEmail, isDraft: false }
         onSendEmail(emailToSend)
-        handleClose()
+        navigate(utilService.getContainingFolder(location.pathname))
         setNewEmail(emailService.createEmail())
-        searchParams(null)
+        setSearchParams(null)
         showSuccessMsg('Email sent successfully')
     }
 
@@ -64,9 +67,16 @@ export function EmailCompose() {
         const draft = { ...newEmail, isDraft: true }
         onSendEmail(draft)
         showSuccessMsg('Saved as a draft')
-        handleClose()
         setNewEmail(emailService.createEmail())
+    }
 
+    function onChangeViewMode(newViewMode) {
+
+        if (viewMode === newViewMode) {
+            setViewMode('normal')
+        } else {
+            setViewMode(newViewMode)
+        }
     }
 
     // setTimeout(() => {
@@ -75,36 +85,51 @@ export function EmailCompose() {
 
 
     return <>
-        <div className="container">
+        <form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}>
 
+            <div className="new-message">
+                <p className={"new-message-title-" + viewMode} >New Message</p>
 
-            <form className="modal-content" onSubmit={handleSendEmail}>
+                <p onClick={() => onChangeViewMode('minimized')}
+                    className="new-message-minimized">
+                    {viewMode === 'minimized' ? (
+                        <img src='../../public/imgs/minimized.png' alt="minimized" title="minimized" />
+                    ) : (
+                        <img src='../../public/imgs/minimize.png' alt="minimize" title="minimize" />
+                    )}
+                </p >
 
-                <div className="modal-header">
-                    <button onClick={handleClose} className="btn-close">x</button >
-                    <p>New Message</p>
-                </div>
+                <p onClick={() => onChangeViewMode('fullscreen')}
+                    className="new-message-fullscreen">
+                    {viewMode === 'fullscreen' ? (
+                        <img src='../../public/imgs/close-fullscreen.png' alt="close-fullscreen" title="close-fullscreen" />
+                    ) : (
+                        <img src='../../public/imgs/fullscreen.png' alt="full-screen" title="full-screen" />
+                    )}
+                </p >
 
-                <div className="modal-body">
-                    <label htmlFor="to">To:</label>
-                    <input className="modal-to" type="text" name="to" value={newEmail.to} placeholder="memo@memo.com" onChange={handleChange} />
-                    <section className="modal-section">
-                        <label htmlFor="subject">Subject:</label>
-                        <input className="modal-subject" id="subject" type="text" name="subject" value={newEmail.subject} onChange={handleChange} />
-                    </section>
+                <p onClick={handleClose}
+                    className="new-message-close-btn">
+                    <img src='../../public/imgs/close.png' alt="save & close" title="save & close" />
+                </p >
+            </div>
 
-                    <section className="modal-section">
-                        <textarea className="modal-description" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
-                    </section>
-                </div>
+            <div className="new-message-recipients">
+                <label htmlFor="to">Recipients: </label>
+                <input className="input-recipients" type="email" name="to" value={newEmail.to} onChange={handleChange} />
+            </div>
 
-                <div className="modal-footer">
-                    <button className="btn-send">send</button>
-                    <button onClick={onSaveDraft} className="btn-save-draft">draft</button>
-                </div>
-            </form>
-        </div >
+            <div className="new-message-subject">
+                <label htmlFor="subject">Subject: </label>
+                <input className="input-subject" id="subject" type="text" name="subject" value={newEmail.subject} onChange={handleChange} />
+            </div>
 
+            <div className="body-input-container">
+                <input className="body-input" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
+            </div>
 
+            <button className="new-message-send-btn">Send</button>
+
+        </form>
     </>
 }
