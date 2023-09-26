@@ -1,16 +1,45 @@
-import { useState } from "react"
-import { useLocation, useNavigate, useOutletContext } from "react-router"
+import { useState, useEffect } from "react"
+import { useLocation, useNavigate, useOutletContext, useParams } from "react-router"
 
 //Services
 import { emailService } from "../services/emails.service"
 import { utilService } from "../services/util.service.js"
+import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service";
+import { useSearchParams } from "react-router-dom";
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const to = searchParams.get('to');
+    const subject = searchParams.get('subject');
+
+    const { emailId } = useParams();
     const { onSendEmail } = useOutletContext()
 
     const location = useLocation()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        loadEmail()
+    }, [])
+
+    async function loadEmail() {
+        if (emailId) {
+            try {
+                const email = await emailService.getById(emailId)
+                setNewEmail(email)
+            } catch (err) {
+                handleClose()
+                showErrorMsg('Had issues loading draft');
+                console.log('Had issues loading draft', err);
+            }
+        }
+        if (to && subject) {
+            const email = { ...newEmail, to, subject }
+            setNewEmail(email)
+        }
+    }
 
     function handleClose() {
         navigate(utilService.getContainingFolder(location.pathname))
@@ -23,11 +52,26 @@ export function EmailCompose() {
 
     function handleSendEmail(ev) {
         ev.preventDefault()
-        onSendEmail(newEmail)
+        const emailToSend = { ...newEmail, isDraft: false }
+        onSendEmail(emailToSend)
         handleClose()
         setNewEmail(emailService.createEmail())
+        searchParams(null)
+        showSuccessMsg('Email sent successfully')
     }
 
+    function onSaveDraft() {
+        const draft = { ...newEmail, isDraft: true }
+        onSendEmail(draft)
+        showSuccessMsg('Saved as a draft')
+        handleClose()
+        setNewEmail(emailService.createEmail())
+
+    }
+
+    // setTimeout(() => {
+    //     onSaveDraft()
+    // }, 5000);
 
 
     return <>
@@ -56,6 +100,7 @@ export function EmailCompose() {
 
                 <div className="modal-footer">
                     <button className="btn-send">send</button>
+                    <button onClick={onSaveDraft} className="btn-save-draft">draft</button>
                 </div>
             </form>
         </div >

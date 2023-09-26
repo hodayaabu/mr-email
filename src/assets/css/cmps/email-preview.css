@@ -25,7 +25,8 @@
 }
 
 .from,
-.subject {
+.subject,
+.draft {
     font-size: large;
 }
 
@@ -35,7 +36,8 @@
 
 .from,
 .subject,
-.body {
+.body,
+.draft {
     display: inline;
     margin: 1.5%;
 }
@@ -43,4 +45,12 @@
 .date {
     float: right;
     margin-right: 2%;
+}
+
+.draft {
+    color: red;
+}
+
+.draft>span {
+    color: black;
 }

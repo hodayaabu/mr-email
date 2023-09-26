@@ -7,7 +7,8 @@ export const emailService = {
     remove,
     getById,
     createEmail,
-    getDefaultFilter
+    getDefaultFilter,
+    getFilterFromParams
 }
 
 const loggedinUser = {
@@ -26,9 +27,21 @@ _createEmails()
 async function query(filterBy) {
 
     let emails = await storageService.query(STORAGE_KEY)
-    var { subject, body, from, to, isRead, sendAt, folder } = filterBy
+    var { search, subject, body, from, to, isRead, sendAt, folder } = filterBy
+
+    if (search) {
+        const lowerCaseSearchString = search.toLowerCase()
+
+        emails = emails.filter(email =>
+            email.subject.toLowerCase().includes(lowerCaseSearchString)
+            || email.body.toLowerCase().includes(lowerCaseSearchString)
+            || email.from.toLowerCase().includes(lowerCaseSearchString)
+            || email.to.toLowerCase().includes(lowerCaseSearchString)
+        )
+    }
 
     if (filterBy) {
+
         emails = emails.filter(email =>
             email.subject.toLowerCase().includes(subject.toLowerCase())
             && email.body.toLowerCase().includes(body.toLowerCase())
@@ -61,10 +74,11 @@ async function query(filterBy) {
                 case 'sent':
                     return (
                         email.sentAt !== null &&
-                        email.from == getLoggedInUser().email
+                        email.from == getLoggedInUser().email &&
+                        !email.isDraft
                     )
                 case 'drafts':
-                    return email.sentAt == null
+                    return email.isDraft
                 case 'all':
                     return email.sentAt != null
                 case 'starred':
@@ -101,6 +115,7 @@ function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), remo
         isRead: true,
         isStarred: false,
         sentAt,
+        isDraft: false,
         removedAt,
         from: loggedinUser.email,
         to,
@@ -114,11 +129,22 @@ function getDefaultFilter() {
         body: '',
         from: '',
         to: '',
+        search: '',
         sendAt: null,
         isRead: null,
-        folder: 'all'
+        folder: null
     }
 }
+
+function getFilterFromParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
+}
+
 
 
 function _createEmails() {

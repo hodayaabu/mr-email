@@ -5,9 +5,11 @@ import star from "../../public/imgs/star_baseline.png";
 import fillStar from "../../public/imgs/star_fil.png";
 
 export function EmailPreview({ email, onUpdateEmail }) {
-    const { id, from, subject, body, isRead, isStarred, sentAt } = email
-    const params = useParams()
+    const { folderName } = useParams()
+    const { id, from, to, subject, body, isRead, isStarred, isDraft, sentAt } = email
+
     const readUaRead = isRead ? 'is-read' : 'un-read'
+    const directTo = isDraft ? `/emails/${folderName}/compose/${id}` : `/emails/${folderName}/${id}`
 
     function onToggle(field) {
         const newEmail = {
@@ -26,9 +28,13 @@ export function EmailPreview({ email, onUpdateEmail }) {
                 <img className="star-img" src={star} />
             )}
         </span>
-        <Link className="wrapper-link" to={`/emails/${params.folderName}/${id}`}>
-            <p className={"from " + readUaRead}>{from.split('@')[0]}</p>
-            <p className={"subject " + readUaRead}>{subject}</p>
+        <Link className="wrapper-link" to={directTo}>
+            {isDraft ? (
+                <p className="draft">Draft, <span> {to && to.split('@')[0]}</span></p>
+            ) : (
+                <p className={"from " + readUaRead}>{from.split('@')[0]}</p>
+            )}
+            <p className={"subject " + readUaRead}>{subject || "(no subject)"}</p>
             <p className="body">- {body.split('.')[0]}</p>
             <span className="date">{new Date(sentAt).toLocaleDateString()}</span>
         </Link>

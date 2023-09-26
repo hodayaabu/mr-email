@@ -27,3 +27,4 @@ function loadFromStorage(key, defaultValue = null) {
 function getContainingFolder(path) {
     return path.split('/').slice(0, 3).join('/')
 }
+

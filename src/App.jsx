@@ -24,7 +24,7 @@ export function App() {
                         <Route path='/' element={<Home />} />
                         <Route path='/about' element={<About />} />
                         <Route path='/emails/:folderName' element={<EmailIndex />}>
-                            <Route path='/emails/:folderName/newEmail' element={<EmailCompose />} />
+                            <Route path='/emails/:folderName/compose/:emailId?' element={<EmailCompose />} />
                         </Route>
                         <Route path="/emails/:folderName/:emailId" element={<EmailDetails />} />
                     </Routes>

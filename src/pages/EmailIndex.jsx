@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, Outlet, useNavigate } from "react-router";
+import { useParams, Outlet, useNavigate } from "react-router-dom";
 
 //services
 import { emailService } from "../services/emails.service";
@@ -12,17 +12,19 @@ import { EmailFolders } from "../comps/EmailFolders";
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
+    // const [searchParams, setSearchParams] = useSearchParams()
+    // const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
+        // setSearchParams(filterBy)
         loadEmails()
     }, [filterBy])
 
     useEffect(() => {
 
-        // filter by folder
         setFilterBy((prevFilterBy) => ({
             ...prevFilterBy,
             folder: params.folderName,
@@ -34,7 +36,7 @@ export function EmailIndex() {
     }
 
     function onComposeClick() {
-        navigate(`/emails/${params.folderName}/newEmail`)
+        navigate(`/emails/${params.folderName}/compose`)
     }
 
     async function loadEmails() {
@@ -74,7 +76,6 @@ export function EmailIndex() {
         try {
             await emailService.save(newEmail)
             await loadEmails()
-            showSuccessMsg('Email sent successfully')
         } catch (err) {
             console.log('Had issues sending email', err);
             showErrorMsg('Had issues sending email');
