@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+//icons
+import SearchIcon from '@mui/icons-material/Search';
+import TuneIcon from '@mui/icons-material/Tune';
+
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [dynClass, setDynClass] = useState(null)
@@ -31,10 +35,10 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     }
     return <>
 
-        <div className="search-outter--box">
+        <div className="search-outter-box">
             <div className="search-box">
                 <span className="img-span--container">
-                    <img src="../../public/imgs/glass.png" className="magnifying-glass--img" />
+                    <SearchIcon />
                 </span>
                 <input type="text"
                     className="search-box"
@@ -42,7 +46,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                     name="search"
                     onChange={handleChange}
                     value={filterByToEdit.search} />
-                <button onClick={openOptions}>options</button>
+                <p className="option-btn" onClick={openOptions}><TuneIcon /></p>
             </div>
         </div>
 

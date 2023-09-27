@@ -6,6 +6,7 @@ import { emailService } from "../services/emails.service";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 //components
+import { Logo } from "../comps/Logo";
 import { EmailList } from "../comps/EmailList";
 import { EmailFilter } from "../comps/EmailFilter";
 import { EmailFolders } from "../comps/EmailFolders";
@@ -94,10 +95,16 @@ export function EmailIndex() {
 
     if (!emails) return <div>Loading..</div>
     return (
-        <div className="container">
+        <div className="email-index">
+            <Logo />
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
             <EmailFolders onComposeClick={onComposeClick} emails={emails} />
-            <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />
+            <section className="email-index-main">
+                <div className="email-list-top"></div>
+                <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />
+                <div className="email-list-bottom"></div>
+
+            </section>
             <Outlet context={{ onSendEmail }} />
         </div>
     )

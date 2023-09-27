@@ -7,6 +7,12 @@ import { utilService } from "../services/util.service.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service";
 import { useSearchParams } from "react-router-dom";
 
+//icons
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
+import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
+import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
+
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
     const [searchParams, setSearchParams] = useSearchParams()
@@ -91,26 +97,23 @@ export function EmailCompose() {
                 <p className={"new-message-title-" + viewMode} >New Message</p>
 
                 <p onClick={() => onChangeViewMode('minimized')}
-                    className="new-message-minimized">
-                    {viewMode === 'minimized' ? (
-                        <img src='../../public/imgs/minimized.png' alt="minimized" title="minimized" />
-                    ) : (
-                        <img src='../../public/imgs/minimize.png' alt="minimize" title="minimize" />
-                    )}
+                    className={"new-message-minimized"}>
+                    <span> <MinimizeOutlinedIcon fontSize="small" title="minimized" /></span>
+
                 </p >
 
                 <p onClick={() => onChangeViewMode('fullscreen')}
                     className="new-message-fullscreen">
                     {viewMode === 'fullscreen' ? (
-                        <img src='../../public/imgs/close-fullscreen.png' alt="close-fullscreen" title="close-fullscreen" />
+                        <CloseFullscreenOutlinedIcon fontSize="small" title="close-fullscreen" />
                     ) : (
-                        <img src='../../public/imgs/fullscreen.png' alt="full-screen" title="full-screen" />
+                        <OpenInFullOutlinedIcon fontSize="small" title="fullscreen" />
                     )}
                 </p >
 
                 <p onClick={handleClose}
                     className="new-message-close-btn">
-                    <img src='../../public/imgs/close.png' alt="save & close" title="save & close" />
+                    <CloseOutlinedIcon fontSize="small" title="save & close" />
                 </p >
             </div>
 

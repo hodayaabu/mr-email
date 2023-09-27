@@ -8,7 +8,8 @@ export const emailService = {
     getById,
     createEmail,
     getDefaultFilter,
-    getFilterFromParams
+    getFilterFromParams,
+    getAllFolders
 }
 
 const loggedinUser = {
@@ -83,7 +84,7 @@ async function query(filterBy) {
                     return email.sentAt != null
                 case 'starred':
                     return email.isStarred
-                case 'bin':
+                case 'trash':
                     return email.removedAt !== null
             }
         })
@@ -190,6 +191,42 @@ function _createEmails() {
     }
 }
 
+// async function getCount(folder) {
+//     let emails = await storageService.query(STORAGE_KEY)
 
+//     const count = emails.filter((email) => {
 
+//         switch (folder) {
+//             case 'inbox':
+//                 return (
+//                     !email.isRead
+//                 )
+//             case 'drafts':
+//                 return (email.isDraft)
+//   
+//         }
+//     })
 
+//     return count.length
+// }
+async function getAllFolders() {
+    const emails = await storageService.query(STORAGE_KEY)
+
+    const unreadEmailsCount = emails.filter(
+        (email) => email.isRead !== true
+    ).length;
+
+    const totalDraftsEmails = emails.filter(
+        (email) => email.isDraft
+    ).length;
+
+    const folders = [
+        { id: 1, name: "Inbox", icon: "../../public/icons/inbox.png", count: unreadEmailsCount },
+        { id: 2, name: "Starred", icon: "../../public/icons/star_baseline.png", count: null },
+        { id: 3, name: "Sent", icon: "../../public/icons/sent.png", count: null },
+        { id: 4, name: "Drafts", icon: "../../public/icons/draft.png", count: totalDraftsEmails },
+        { id: 5, name: "Bin", icon: "../../public/imgs/trash.png", count: null },
+    ];
+
+    return folders;
+}

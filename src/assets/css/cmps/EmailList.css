@@ -1,0 +1,15 @@
+.email-list {
+    border-radius: 4%;
+    margin-top: 10px;
+    overflow-y: auto;
+    padding-inline-start: 10px;
+}
+
+.list-item {
+    text-decoration: none !important;
+    display: flex;
+}
+
+.email-actions {
+    display: flex;
+}

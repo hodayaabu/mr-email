@@ -1,10 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 
 //icons
-import star from "../../public/imgs/star_baseline.png";
-import fillStar from "../../public/imgs/star_fil.png";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
+import MarkunreadOutlinedIcon from '@mui/icons-material/MarkunreadOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { yellow } from "@mui/material/colors";
 
-export function EmailPreview({ email, onUpdateEmail }) {
+export function EmailPreview({ email, onRemove, onUpdateEmail }) {
     const { folderName } = useParams()
     const { id, from, to, subject, body, isRead, isStarred, isDraft, sentAt } = email
 
@@ -23,9 +27,8 @@ export function EmailPreview({ email, onUpdateEmail }) {
         <input type="checkbox" name="1" className="email-checkbox" />
         <span onClick={() => onToggle('isStarred')}>
             {isStarred ? (
-                <img src={fillStar} />
-            ) : (
-                <img className="star-img" src={star} />
+                <StarIcon fontSize="small" sx={{ color: yellow[500] }} />) : (
+                <StarBorderIcon fontSize="small" />
             )}
         </span>
         <Link className="wrapper-link" to={directTo}>
@@ -38,9 +41,15 @@ export function EmailPreview({ email, onUpdateEmail }) {
             <p className="body">- {body.split('.')[0]}</p>
             <span className="date">{new Date(sentAt).toLocaleDateString()}</span>
         </Link>
-        <span onClick={() => onToggle('isRead')}>
-            {isRead ? " 📭" : " 📬"}
-        </span>
+        <p className="email-actions">
+            <span onClick={() => onRemove(email.id)}>
+                <DeleteIcon fontSize="small" />
+            </span>
+            <span className="is-read-icon" onClick={() => onToggle('isRead')}>
+                {isRead ? <DraftsOutlinedIcon fontSize="small" /> : <MarkunreadOutlinedIcon fontSize="small" />}
+            </span>
+        </p>
+
     </article>
 
 }
