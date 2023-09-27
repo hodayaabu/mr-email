@@ -11,8 +11,7 @@
 }
 
 .user-msg.error {
-    color: red;
-    border: 2px solid green;
+    background-color: red;
 }
 
 .user-msg button {

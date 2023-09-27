@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 //icons
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
@@ -50,34 +51,37 @@ export function EmailFilter({ filterBy, onSetFilter }) {
             </div>
         </div>
 
-        <form className="email-filter" onSubmit={onSubmitFilter}>
+        <form className={"email-filter-options " + dynClass} onSubmit={onSubmitFilter}>
+            <Link className="close-options-btn" onClick={onCloseFilterOption}><ClearIcon fontSize='small' /></Link>
+            <div className='filter-options' >
 
-            <div className={'filter-options ' + dynClass}>
-                <label htmlFor="from">From:</label>
-                <input type="text" id="from"
-                    placeholder="Search by from"
-                    name="from"
-                    onChange={handleChange}
-                    value={filterByToEdit.from} />
+                <div className="option">
+                    <label htmlFor="from">From</label>
+                    <input type="text" id="from"
+                        name="from"
+                        onChange={handleChange}
+                        value={filterByToEdit.from} />
+                </div>
 
-                <label htmlFor="to">To:</label>
-                <input type="text" id="to"
-                    placeholder="Search by to"
-                    name="to"
-                    onChange={handleChange}
-                    value={filterByToEdit.to} />
+                <div className="option">
+                    <label htmlFor="to">To</label>
+                    <input type="text" id="to"
+                        name="to"
+                        onChange={handleChange}
+                        value={filterByToEdit.to} />
+                </div>
 
-                <label htmlFor="subject">Subject:</label>
-                <input type="text" id="subject"
-                    placeholder="Search by subject"
-                    name="subject"
-                    onChange={handleChange}
-                    value={filterByToEdit.subject} />
+                <div className="option">
+                    <label htmlFor="subject">Subject</label>
+                    <input type="text" id="subject"
+                        name="subject"
+                        onChange={handleChange}
+                        value={filterByToEdit.subject} />
+                </div>
 
 
                 <div className="sortRead">
                     <select name='isRead' onChange={handleChange} >
-                        <option>Sort By:</option>
                         <option value='true'>Read Emails</option>
                         <option value='false'>UnRead Emails</option>
                         <option value='null'>All</option>
@@ -91,8 +95,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                         <option value="false">old to new</option>
                     </select>
                 </div>
-                <button >search</button>
-                <Link onClick={onCloseFilterOption}>X</Link>
+                <button className='search-btn' >search</button>
+
 
             </div>
 
