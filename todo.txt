@@ -1,0 +1,9 @@
+לשאול: גיטהבפייג'ס, count folder, sort date, ref undifinde
+
+לנסות שוב:
+-search-params
+-sort bydate
+-draft saved any 10 sec
+
+תרגול
+עיצוב

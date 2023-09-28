@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +9,7 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { emailService } from '../services/emails.service';
 
 export function EmailFolders({ emails, onComposeClick }) {
   const [active, setActive] = useState();
@@ -66,4 +68,9 @@ export function EmailFolders({ emails, onComposeClick }) {
       ))}
     </div>
   );
+}
+
+EmailFolders.propTypes = {
+  emails: PropTypes.arrayOf(emailService.getEmailShape()),
+  onComposeClick: PropTypes.func
 }

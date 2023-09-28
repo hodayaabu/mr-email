@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
@@ -9,7 +11,8 @@ export const emailService = {
     createEmail,
     getDefaultFilter,
     getFilterFromParams,
-    getAllFolders
+    getAllFolders,
+    getEmailShape,
 }
 
 const loggedinUser = {
@@ -155,10 +158,25 @@ function getFilterFromParams(searchParams) {
     for (const field in defaultFilter) {
         filterBy[field] = searchParams.get(field) || ''
     }
+
     return filterBy
 }
 
+function getEmailShape() {
+    return PropTypes.shape({
+        id: PropTypes.string,
+        subject: PropTypes.string,
+        body: PropTypes.string,
+        isRead: PropTypes.bool,
+        isStarred: PropTypes.bool,
+        sentAt: PropTypes.number,
+        isDraft: PropTypes.bool,
+        removedAt: PropTypes.number,
+        from: PropTypes.string,
+        to: PropTypes.string,
 
+    })
+}
 
 function _createEmails() {
     let emails = utilService.loadFromStorage(STORAGE_KEY)

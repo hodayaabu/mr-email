@@ -1,6 +1,10 @@
+import PropTypes from 'prop-types'
+
+//components
 import { EmailPreview } from "./EmailPreview";
 
-//icon
+//services
+import { emailService } from '../services/emails.service';
 
 export function EmailList({ emails, onRemove, onUpdateEmail }) {
 
@@ -13,4 +17,11 @@ export function EmailList({ emails, onRemove, onUpdateEmail }) {
             }
         </ul>
     )
+}
+
+
+EmailList.propTypes = {
+    emails: PropTypes.arrayOf(emailService.getEmailShape()),
+    onRemove: PropTypes.func,
+    onUpdateEmail: PropTypes.func
 }

@@ -136,10 +136,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 <p className='clear-filter' onClick={onClearFilter} >Clear filter</p>
 
             </div>
-
-
-
-
         </form>
     </>
 }

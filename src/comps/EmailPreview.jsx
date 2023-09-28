@@ -1,4 +1,8 @@
 import { Link, useParams } from "react-router-dom";
+import PropTypes from 'prop-types'
+
+//services
+import { emailService } from '../services/emails.service';
 
 //icons
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -53,3 +57,10 @@ export function EmailPreview({ email, onRemove, onUpdateEmail }) {
     </article>
 
 }
+
+EmailPreview.propTypes = {
+    email: emailService.getEmailShape(),
+    onRemove: PropTypes.func,
+    onUpdateEmail: PropTypes.func
+}
+
