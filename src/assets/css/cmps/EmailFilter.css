@@ -48,7 +48,7 @@ input:focus {
     z-index: 3;
     overflow: hidden;
     background-color: #fff;
-    height: 70%;
+    height: 75%;
     padding: 20px;
     width: 58%;
     box-shadow: #0656d0;
@@ -67,7 +67,7 @@ input:focus {
 .option>input {
     border: none;
     border-bottom: 1px solid rgb(223, 222, 222);
-    width: 85%;
+    width: 75%;
     overflow: scroll;
     margin: 10px;
 }
@@ -84,6 +84,13 @@ input:focus {
     border: none;
     border-radius: 10px;
     font-weight: bold;
+}
+
+.clear-filter {
+    position: absolute;
+    bottom: 20px;
+    right: 150px;
+    cursor: pointer;
 }
 
 .show {

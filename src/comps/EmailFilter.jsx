@@ -17,7 +17,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     function handleChange(ev) {
         let { value, name: field } = ev.target
 
-        if (field === 'isRead' || field === 'sendAt') {
+        if (field === 'isRead') {
             value = JSON.parse(value)
         }
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
@@ -26,7 +26,9 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     function onSubmitFilter(ev) {
         ev.preventDefault()
         onSetFilter(filterByToEdit)
+        onCloseFilterOption()
     }
+
     function openOptions() {
         setDynClass('show')
     }
@@ -34,6 +36,12 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     function onCloseFilterOption() {
         setDynClass(null)
     }
+
+    function onClearFilter() {
+        setFilterByToEdit(filterBy)
+        onCloseFilterOption()
+    }
+
     return <>
 
         <div className="search-outter-box">
@@ -79,6 +87,42 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                         value={filterByToEdit.subject} />
                 </div>
 
+                <div className="option">
+                    <label htmlFor="search">Has the words</label>
+                    <input type="text"
+                        id='search'
+                        name="search"
+                        onChange={handleChange}
+                        value={filterByToEdit.search} />
+                </div>
+
+                <div className="option">
+                    <label htmlFor="dosnt-have">Doesnt have</label>
+                    <input type="text"
+                        id='dosnt-have'
+                        name="dosentHasWords"
+                        onChange={handleChange}
+                        value={filterByToEdit.dosentHasWords} />
+                </div>
+
+                <div className="option">
+                    <label htmlFor="sentAt">Date within</label>
+                    <input type="date"
+                        id='sentAt'
+                        name="sentAt"
+                        onChange={handleChange}
+                        value={filterByToEdit.sentAt} />
+                </div>
+
+                <div className="option">
+                    <label htmlFor="search">Search</label>
+                    <input type="text"
+                        placeholder='All Mail'
+                        id='search'
+                        name="search"
+                        onChange={handleChange}
+                        value={filterByToEdit.search} />
+                </div>
 
                 <div className="sortRead">
                     <select name='isRead' onChange={handleChange} >
@@ -88,15 +132,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                     </select>
                 </div>
 
-                <div className="sortDate">
-                    <select name='sendAt' onChange={handleChange} >
-                        <option>Sort By Date:</option>
-                        <option value="true">new to old</option>
-                        <option value="false">old to new</option>
-                    </select>
-                </div>
-                <button className='search-btn' >search</button>
-
+                <button type='submit' className='search-btn' >search</button>
+                <p className='clear-filter' onClick={onClearFilter} >Clear filter</p>
 
             </div>
 

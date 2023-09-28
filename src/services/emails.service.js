@@ -28,7 +28,7 @@ _createEmails()
 async function query(filterBy) {
 
     let emails = await storageService.query(STORAGE_KEY)
-    var { search, subject, body, from, to, isRead, sendAt, folder } = filterBy
+    var { search, dosentHasWords, subject, body, from, to, isRead, sendAt, folder } = filterBy
 
     if (search) {
         const lowerCaseSearchString = search.toLowerCase()
@@ -38,6 +38,16 @@ async function query(filterBy) {
             || email.body.toLowerCase().includes(lowerCaseSearchString)
             || email.from.toLowerCase().includes(lowerCaseSearchString)
             || email.to.toLowerCase().includes(lowerCaseSearchString)
+        )
+    }
+
+    if (dosentHasWords) {
+
+        emails = emails.filter(email =>
+            !email.subject.toLowerCase().includes(dosentHasWords)
+            || !email.body.toLowerCase().includes(dosentHasWords)
+            || !email.from.toLowerCase().includes(dosentHasWords)
+            || !email.to.toLowerCase().includes(dosentHasWords)
         )
     }
 
@@ -58,10 +68,12 @@ async function query(filterBy) {
     }
 
     if (sendAt) {
-        emails = emails.sort((a, b) => (b.sendAt) - (a.sendAt)).slice(0, 14)
-    }
-    if (sendAt === false) {
-        emails = emails.sort((a, b) => (a.sendAt) - (b.sendAt)).slice(0, 14)
+        console.log("sendat", sendAt);
+        const date = new Date(sendAt).getTime();
+        console.log("date", date);
+        emails = emails.filter(email =>
+            email.sendAt === date
+        )
     }
 
     if (folder) {

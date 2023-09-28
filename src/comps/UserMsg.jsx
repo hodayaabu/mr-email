@@ -3,12 +3,10 @@ import { eventBusService } from "../services/event-bus.service";
 
 export function UserMsg() {
     const [msg, setMsg] = useState(null)
-    console.log(msg);
 
     useEffect(() => {
         const unsubscribe = eventBusService.on('show-user-msg', (msg) => {
             setMsg(msg)
-            console.log(msg);
             setTimeout(() => {
                 onCloseMsg()
             }, 3000);
