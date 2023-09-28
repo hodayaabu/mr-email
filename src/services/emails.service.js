@@ -27,9 +27,8 @@ _createEmails()
 
 async function query(filterBy = null) {
     let emails = await storageService.query(STORAGE_KEY)
-
     if (!filterBy) return emails
-    const { search, dosentHasWords, subject, body, from, to, isRead, sendAt, folder } = filterBy
+    const { search, dosentHasWords, subject, body, from, to, isRead, sentAt, folder } = filterBy
 
     if (search) {
         const lowerCaseSearchString = search.toLowerCase()
@@ -62,19 +61,25 @@ async function query(filterBy = null) {
         )
     }
 
-    if (isRead !== null && isRead !== undefined) {
+    if (isRead !== null && isRead !== undefined && isRead !== 'null') {
         emails = emails.filter(email =>
             email.isRead === filterBy.isRead
         )
     }
 
-    if (sendAt) {
-        console.log("sendat", sendAt);
-        const date = new Date(sendAt).getTime();
-        console.log("date", date);
-        emails = emails.filter(email =>
-            email.sendAt === date
-        )
+    function sameDay(d1, d2) {
+        return d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
+    }
+
+    if (sentAt) {
+        const filteredDate = new Date(sentAt);
+        emails = emails.filter(email => {
+            const emailSentAt = new Date(email.sentAt)
+            sameDay(filteredDate, emailSentAt)
+        })
+        return emails
     }
 
     if (folder) {
@@ -144,7 +149,7 @@ function getDefaultFilter() {
         from: '',
         to: '',
         search: '',
-        sendAt: null,
+        sentAt: '',
         isRead: null,
         folder: null
     }
@@ -157,7 +162,7 @@ function getFilterFromParams(searchParams) {
         from: searchParams.get('from') || '',
         to: searchParams.get('field') || '',
         search: searchParams.get('search') || '',
-        sendAt: searchParams.get('sentAt') || null,
+        sentAt: searchParams.get('sentAt') || '',
         isRead: searchParams.get('isRead') || null,
         folder: searchParams.get('folderName') || null
     }
