@@ -11,28 +11,20 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { emailService } from '../services/emails.service';
 
-export function EmailFolders({ emails, onComposeClick }) {
+export function EmailFolders({ onComposeClick, unreadCount, draftCount }) {
   const [active, setActive] = useState();
   const navigate = useNavigate()
 
-  const unreadEmailsCount = emails.filter(
-    (email) => email.isRead !== true
-  ).length;
-
-  const draftsCount = emails.filter(
-    (email) => email.isDraft
-  ).length;
-
-  const buttons = [
-    { id: 1, name: "Inbox", icon: <InboxOutlinedIcon fontSize="small" />, count: unreadEmailsCount },
-    { id: 2, name: "Starred", icon: <StarBorderOutlinedIcon fontSize="small" />, count: null },
-    { id: 3, name: "Sent", icon: <SendOutlinedIcon fontSize="small" />, count: null },
-    { id: 4, name: "Drafts", icon: <InsertDriveFileOutlinedIcon fontSize="small" />, count: draftsCount },
-    { id: 5, name: "Trash", icon: <DeleteOutlineIcon fontSize="small" />, count: null },
+  const folders = [
+    { id: 1, name: "Inbox", icon: <InboxOutlinedIcon fontSize="small" />, count: unreadCount },
+    { id: 2, name: "Starred", icon: <StarBorderOutlinedIcon fontSize="small" /> },
+    { id: 3, name: "Sent", icon: <SendOutlinedIcon fontSize="small" /> },
+    { id: 4, name: "Drafts", icon: <InsertDriveFileOutlinedIcon fontSize="small" />, count: draftCount },
+    { id: 5, name: "Trash", icon: <DeleteOutlineIcon fontSize="small" /> },
   ];
 
 
-  function setActiveButton(name) {
+  function setActiveFolder(name) {
     navigate(`/emails/${name.toLowerCase()}`)
     setActive(name);
   }
@@ -48,20 +40,19 @@ export function EmailFolders({ emails, onComposeClick }) {
         Compose
       </button>
 
-      {buttons.map((button) => (
+      {folders.map((folder) => (
         <button
-          key={button.id}
-          className={`side-panel-btn ${active === button.name ? "active" : ""}`}
-          onClick={() => setActiveButton(button.name)}
+          key={folder.id}
+          className={`side-panel-btn ${active === folder.name ? "active" : ""}`}
+          onClick={() => setActiveFolder(folder.name)}
         >
-          {button.icon}
-          <p className={active === button.name ? "active" : ""}>
-            {button.name}
+          {folder.icon}
+          <p className={active === folder.name ? "active" : ""}>
+            {folder.name}
             <span className="emails-count">
-              {/* {button.name === "Inbox" && unreadEmailsCount > 0
-                ? unreadEmailsCount
-                : ""} */}
-              {button.count > 0 && button.count}
+              {folder.count
+                ? folder.count
+                : ""}
             </span>
           </p>
         </button>

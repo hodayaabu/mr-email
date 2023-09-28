@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, Outlet, useNavigate } from "react-router-dom";
+import { useParams, Outlet, useNavigate, useSearchParams } from "react-router-dom";
 
 //services
 import { emailService } from "../services/emails.service";
@@ -13,24 +13,25 @@ import { EmailFolders } from "../comps/EmailFolders";
 
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
-    // const [searchParams, setSearchParams] = useSearchParams()
-    // const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
-    const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
+    const [unreadCount, setUnreadCount] = useState(0)
+    const [draftCount, setDraftCount] = useState(0)
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
-        // setSearchParams(filterBy)
+        setSearchParams(filterBy)
         loadEmails()
     }, [filterBy])
 
     useEffect(() => {
-
+        if (filterBy.folder === params.folderName) return
         setFilterBy((prevFilterBy) => ({
             ...prevFilterBy,
             folder: params.folderName,
         }))
-    }, [params])
+    }, [params.folderName])
 
     function onSetFilter(fieldsToUpdate) {
         setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }))
@@ -43,7 +44,12 @@ export function EmailIndex() {
     async function loadEmails() {
         try {
             const emails = await emailService.query(filterBy)
+            const unreadCount = await emailService.getUnreadCount()
+            const draftCount = await emailService.getDraftCount()
+
             setEmails(emails)
+            setUnreadCount(unreadCount)
+            setDraftCount(draftCount)
         } catch (err) {
             showErrorMsg('Had issues loading emails')
             console.log('Had issues loading emails', err);
@@ -98,7 +104,7 @@ export function EmailIndex() {
         <div className="email-index">
             <Logo />
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            <EmailFolders onComposeClick={onComposeClick} emails={emails} />
+            <EmailFolders onComposeClick={onComposeClick} unreadCount={unreadCount} draftCount={draftCount} emails={emails} />
             <section className="email-index-main">
                 <div className="email-list-top"></div>
                 <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />

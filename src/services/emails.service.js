@@ -11,8 +11,9 @@ export const emailService = {
     createEmail,
     getDefaultFilter,
     getFilterFromParams,
-    getAllFolders,
     getEmailShape,
+    getUnreadCount,
+    getDraftCount
 }
 
 const loggedinUser = {
@@ -22,16 +23,13 @@ const loggedinUser = {
 
 const STORAGE_KEY = 'emails'
 
-function getLoggedInUser() {
-    return loggedinUser
-}
-
 _createEmails()
 
-async function query(filterBy) {
-
+async function query(filterBy = null) {
     let emails = await storageService.query(STORAGE_KEY)
-    var { search, dosentHasWords, subject, body, from, to, isRead, sendAt, folder } = filterBy
+
+    if (!filterBy) return emails
+    const { search, dosentHasWords, subject, body, from, to, isRead, sendAt, folder } = filterBy
 
     if (search) {
         const lowerCaseSearchString = search.toLowerCase()
@@ -64,7 +62,7 @@ async function query(filterBy) {
         )
     }
 
-    if (isRead !== null) {
+    if (isRead !== null && isRead !== undefined) {
         emails = emails.filter(email =>
             email.isRead === filterBy.isRead
         )
@@ -85,12 +83,12 @@ async function query(filterBy) {
             switch (folder) {
                 case 'inbox':
                     return (
-                        email.to == getLoggedInUser().email
+                        email.to === _getLoggedInUser().email
                     )
                 case 'sent':
                     return (
                         email.sentAt !== null &&
-                        email.from == getLoggedInUser().email &&
+                        email.from === _getLoggedInUser().email &&
                         !email.isDraft
                     )
                 case 'drafts':
@@ -153,10 +151,15 @@ function getDefaultFilter() {
 }
 
 function getFilterFromParams(searchParams) {
-    const defaultFilter = getDefaultFilter()
-    const filterBy = {}
-    for (const field in defaultFilter) {
-        filterBy[field] = searchParams.get(field) || ''
+    const filterBy = {
+        subject: searchParams.get('subject') || '',
+        body: searchParams.get('body') || '',
+        from: searchParams.get('from') || '',
+        to: searchParams.get('field') || '',
+        search: searchParams.get('search') || '',
+        sendAt: searchParams.get('sentAt') || null,
+        isRead: searchParams.get('isRead') || null,
+        folder: searchParams.get('folderName') || null
     }
 
     return filterBy
@@ -176,6 +179,22 @@ function getEmailShape() {
         to: PropTypes.string,
 
     })
+}
+
+async function getUnreadCount() {
+    const filterBy = getDefaultFilter()
+    filterBy.isRead = false
+    const emails = await query(filterBy)
+    return emails.length
+}
+
+async function getDraftCount() {
+    const filterBy = getDefaultFilter()
+    const emails = await query(filterBy)
+    const drafts = emails.filter((email) => (
+        email.isDraft
+    ))
+    return drafts.length
 }
 
 function _createEmails() {
@@ -221,42 +240,6 @@ function _createEmails() {
     }
 }
 
-// async function getCount(folder) {
-//     let emails = await storageService.query(STORAGE_KEY)
-
-//     const count = emails.filter((email) => {
-
-//         switch (folder) {
-//             case 'inbox':
-//                 return (
-//                     !email.isRead
-//                 )
-//             case 'drafts':
-//                 return (email.isDraft)
-//   
-//         }
-//     })
-
-//     return count.length
-// }
-async function getAllFolders() {
-    const emails = await storageService.query(STORAGE_KEY)
-
-    const unreadEmailsCount = emails.filter(
-        (email) => email.isRead !== true
-    ).length;
-
-    const totalDraftsEmails = emails.filter(
-        (email) => email.isDraft
-    ).length;
-
-    const folders = [
-        { id: 1, name: "Inbox", icon: "../../public/icons/inbox.png", count: unreadEmailsCount },
-        { id: 2, name: "Starred", icon: "../../public/icons/star_baseline.png", count: null },
-        { id: 3, name: "Sent", icon: "../../public/icons/sent.png", count: null },
-        { id: 4, name: "Drafts", icon: "../../public/icons/draft.png", count: totalDraftsEmails },
-        { id: 5, name: "Bin", icon: "../../public/imgs/trash.png", count: null },
-    ];
-
-    return folders;
+function _getLoggedInUser() {
+    return loggedinUser
 }
