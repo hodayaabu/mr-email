@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/mr-email#/emails/inbox",
+  base: "/mr-email#",
   plugins: [react()],
 })

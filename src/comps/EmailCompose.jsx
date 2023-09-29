@@ -12,11 +12,15 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
+import AddLocationOutlinedIcon from '@mui/icons-material/AddLocationOutlined';
+import { UserLocation } from "./UserLocation";
+import { useToggle } from "../customHooks/useToggle";
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
     const [searchParams, setSearchParams] = useSearchParams()
     const [viewMode, setViewMode] = useState('normal')
+    const [isOpen, onToggle] = useToggle()
 
     const to = searchParams.get('to');
     const subject = searchParams.get('subject');
@@ -130,7 +134,12 @@ export function EmailCompose() {
             <div className="body-input-container">
                 <input className="body-input" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
             </div>
-
+            {isOpen &&
+                <div className="map">
+                    <UserLocation />
+                </div>
+            }
+            <p onClick={onToggle} className="add-location" title="add location"><AddLocationOutlinedIcon /></p>
             <button className="new-message-send-btn">Send</button>
 
 

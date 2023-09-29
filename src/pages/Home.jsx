@@ -10,6 +10,9 @@ export function Home() {
             <div>
                 <Link to={`/emails/inbox`}>inbox</Link>
             </div>
+            < div>
+                <Link to={`/about`}>about</Link>
+            </div>
         </section>
     )
 }
