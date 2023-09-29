@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import ClearIcon from '@mui/icons-material/Clear';
+// import { useForm } from '../customHooks/useForm';
 
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    // const [filterByToEdit, handleChange] = useForm(filterBy)
+
     const [dynClass, setDynClass] = useState(null)
 
     useEffect(() => {
@@ -38,7 +41,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     }
 
     function onClearFilter() {
-        setFilterByToEdit(filterBy)
+        // handleChange(filterBy)
+        onSetFilter(filterBy)
         onCloseFilterOption()
     }
 
@@ -52,9 +56,9 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 <input type="text"
                     className="search-box"
                     placeholder="Search mail"
-                    name="search"
+                    name="searchMail"
                     onChange={handleChange}
-                    value={filterByToEdit.search} />
+                    value={filterByToEdit.searchMail} />
                 <p className="option-btn" onClick={openOptions}><TuneIcon /></p>
             </div>
         </div>
@@ -91,9 +95,9 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                     <label htmlFor="search">Has the words</label>
                     <input type="text"
                         id='search'
-                        name="search"
+                        name="searchMail"
                         onChange={handleChange}
-                        value={filterByToEdit.search} />
+                        value={filterByToEdit.searchMail} />
                 </div>
 
                 <div className="option">
@@ -119,9 +123,9 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                     <input type="text"
                         placeholder='All Mail'
                         id='search'
-                        name="search"
+                        name="searchMail"
                         onChange={handleChange}
-                        value={filterByToEdit.search} />
+                        value={filterByToEdit.searchMail} />
                 </div>
 
                 <div className="sortRead">

@@ -26,10 +26,10 @@ export function EmailIndex() {
     }, [filterBy])
 
     useEffect(() => {
-        if (filterBy.folder === params.folderName) return
+        if (filterBy.folderName === params.folderName) return
         setFilterBy((prevFilterBy) => ({
             ...prevFilterBy,
-            folder: params.folderName,
+            folderName: params.folderName,
         }))
     }, [params.folderName])
 

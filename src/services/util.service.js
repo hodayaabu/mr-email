@@ -30,7 +30,6 @@ function getContainingFolder(path) {
 }
 
 function animateCSS(el, animation, isRemoveClass = true) {
-    console.log(el, animation);
     const prefix = 'animate__'
     return new Promise((resolve) => {
 

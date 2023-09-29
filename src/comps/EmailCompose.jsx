@@ -133,6 +133,7 @@ export function EmailCompose() {
 
             <button className="new-message-send-btn">Send</button>
 
+
         </form>
     </>
 }

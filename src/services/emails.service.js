@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 
+//services
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
@@ -28,10 +29,10 @@ _createEmails()
 async function query(filterBy = null) {
     let emails = await storageService.query(STORAGE_KEY)
     if (!filterBy) return emails
-    const { search, dosentHasWords, subject, body, from, to, isRead, sentAt, folder } = filterBy
+    const { searchMail, dosentHasWords, subject, body, from, to, isRead, sentAt, folderName } = filterBy
 
-    if (search) {
-        const lowerCaseSearchString = search.toLowerCase()
+    if (searchMail) {
+        const lowerCaseSearchString = searchMail.toLowerCase()
 
         emails = emails.filter(email =>
             email.subject.toLowerCase().includes(lowerCaseSearchString)
@@ -82,10 +83,10 @@ async function query(filterBy = null) {
         return emails
     }
 
-    if (folder) {
+    if (folderName) {
         emails = emails.filter((email) => {
 
-            switch (folder) {
+            switch (folderName) {
                 case 'inbox':
                     return (
                         email.to === _getLoggedInUser().email
@@ -148,10 +149,10 @@ function getDefaultFilter() {
         body: '',
         from: '',
         to: '',
-        search: '',
+        searchMail: '',
         sentAt: '',
         isRead: null,
-        folder: null
+        folderName: null
     }
 }
 
@@ -161,10 +162,10 @@ function getFilterFromParams(searchParams) {
         body: searchParams.get('body') || '',
         from: searchParams.get('from') || '',
         to: searchParams.get('field') || '',
-        search: searchParams.get('search') || '',
+        searchMail: searchParams.get('searchMail') || '',
         sentAt: searchParams.get('sentAt') || '',
         isRead: searchParams.get('isRead') || null,
-        folder: searchParams.get('folderName') || null
+        folderName: searchParams.get('folderName') || null
     }
 
     return filterBy

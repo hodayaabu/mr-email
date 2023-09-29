@@ -9,7 +9,6 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { emailService } from '../services/emails.service';
 
 export function EmailFolders({ onComposeClick, unreadCount, draftCount }) {
   const [active, setActive] = useState();
@@ -62,6 +61,7 @@ export function EmailFolders({ onComposeClick, unreadCount, draftCount }) {
 }
 
 EmailFolders.propTypes = {
-  emails: PropTypes.arrayOf(emailService.getEmailShape()),
-  onComposeClick: PropTypes.func
+  onComposeClick: PropTypes.func,
+  unreadCount: PropTypes.number,
+  draftCount: PropTypes.number
 }

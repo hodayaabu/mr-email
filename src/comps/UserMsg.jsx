@@ -9,8 +9,6 @@ export function UserMsg() {
     const elMsgRef = useRef()
 
     useEffect(() => {
-
-
         const unsubscribe = eventBusService.on('show-user-msg', (msg) => {
             setMsg(msg)
             setTimeout(() => {
@@ -21,20 +19,19 @@ export function UserMsg() {
     }, [])
 
     useEffect(() => {
-        if (msg) startAnimation()
+        if (msg) startAnimation('backInLeft')
     }, [msg])
 
-    async function startAnimation() {
+    async function startAnimation(animation) {
         try {
-            console.log(elMsgRef);
-            await utilService.animateCSS(elMsgRef.current, 'backInLeft')
+            await utilService.animateCSS(elMsgRef.current, animation)
         } catch (arr) {
-            console.log(arr);
+            console.log("cennot start animateCSS:", arr);
         }
     }
 
     async function onCloseMsg() {
-        // await utilService.animateCSS(userMessage.current, 'animate__backOutLeft')
+        await startAnimation('backOutLeft')
         setMsg(null)
     }
 
