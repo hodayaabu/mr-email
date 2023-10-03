@@ -127,7 +127,7 @@ function save(emailToSave) {
     }
 }
 
-function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), removedAt, to = "") {
+function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), removedAt, to = "", location = "") {
     const email = {
         id,
         subject,
@@ -139,6 +139,7 @@ function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), remo
         removedAt,
         from: loggedinUser.email,
         to,
+        location,
     }
     return email
 }

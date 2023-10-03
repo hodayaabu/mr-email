@@ -18,10 +18,11 @@ import { useToggle } from "../customHooks/useToggle";
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
+    const [userLocation, setUserLocation] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const [viewMode, setViewMode] = useState('normal')
     const [isOpen, onToggle] = useToggle()
-
+    console.log(userLocation);
     const to = searchParams.get('to');
     const subject = searchParams.get('subject');
 
@@ -65,11 +66,12 @@ export function EmailCompose() {
 
     function handleSendEmail(ev) {
         ev.preventDefault()
-        const emailToSend = { ...newEmail, isDraft: false }
+        const emailToSend = { ...newEmail, isDraft: false, location: userLocation }
         onSendEmail(emailToSend)
         navigate(utilService.getContainingFolder(location.pathname))
         setNewEmail(emailService.createEmail())
         setSearchParams(null)
+        setUserLocation(null)
         showSuccessMsg('Email sent successfully')
     }
 
@@ -89,6 +91,9 @@ export function EmailCompose() {
         }
     }
 
+    function getUserLocation({ lat, lng }) {
+        setUserLocation({ lat, lng })
+    }
     // setTimeout(() => {
     //     onSaveDraft()
     // }, 5000);
@@ -136,7 +141,7 @@ export function EmailCompose() {
             </div>
             {isOpen &&
                 <div className="map">
-                    <UserLocation />
+                    <UserLocation getUserLocation={getUserLocation} />
                 </div>
             }
             <p onClick={onToggle} className="add-location" title="add location"><AddLocationOutlinedIcon /></p>

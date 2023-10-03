@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router"
+import GoogleMapReact from 'google-map-react';
 
 //Services
 import { utilService } from "../services/util.service";
@@ -41,6 +42,16 @@ export function EmailDetails() {
             <h1>{email.subject}</h1>
             <h5>{email.from}</h5>
             <p>{email.body}</p>
+            {email.location &&
+                <div className="map">
+                    <div style={{ height: '150px', width: '100%' }}>
+                        <GoogleMapReact
+                            bootstrapURLKeys={{ key: "AIzaSyCju_hmhNCmyKS7cwa8YtAjNkO7ZPz4XmU" }}
+                            center={{ lat: email.location.lat, lng: email.location.lng }}
+                            defaultZoom={16}
+                        />
+                    </div>
+                </div>}
             <button onClick={handleGoBack}>Go back</button>
 
         </section>

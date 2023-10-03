@@ -4,10 +4,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-export function UserLocation() {
+export function UserLocation({ getUserLocation }) {
 
-    const [coordinates, setCoordinates] = useState({ lat: 32.0853, lng: 34.7818 })
+    const [coordinates, setCoordinates] = useState({ lat: 33.0833, lng: 34.7818 })
     const zoom = 16
+
     useEffect(() => {
         getPosition()
     }, [])
@@ -24,17 +25,18 @@ export function UserLocation() {
         console.log(position);
         const lat = position.coords.latitude
         const lng = position.coords.longitude
-
+        getUserLocation({ lat, lng })
         setCoordinates({ lat, lng })
     }
 
     function handleLocationError(err) {
         console.log(err.message);
     }
+
     function onHandleClick({ lat, lng }) {
         setCoordinates({ lat, lng })
     }
-
+    console.log(coordinates);
     return (
         // Important! Always set the container height explicitly
         <div style={{ height: '150px', width: '100%' }}>
