@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { useLocation, useNavigate, useOutletContext, useParams } from "react-router"
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 //Services
 import { emailService } from "../services/emails.service"
@@ -64,14 +66,13 @@ export function EmailCompose() {
         setNewEmail((prevNewEmail) => ({ ...prevNewEmail, [field]: value }))
     }
 
-    function handleSendEmail(ev) {
-        ev.preventDefault()
+    function handleSendEmail() {
         const emailToSend = { ...newEmail, isDraft: false, location: userLocation }
         onSendEmail(emailToSend)
         navigate(utilService.getContainingFolder(location.pathname))
         setNewEmail(emailService.createEmail())
         setSearchParams(null)
-        setUserLocation(null)
+        setUserLocation('')
         showSuccessMsg('Email sent successfully')
     }
 
@@ -98,56 +99,85 @@ export function EmailCompose() {
     //     onSaveDraft()
     // }, 5000);
 
+    const composeSchema = Yup.object().shape({
+        to: Yup.string()
+            .min(2, 'Too Short!')
+            .required('Required')
+            .email('Invalid email'),
+        subject: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!'),
+        body: Yup.string()
+    });
 
     return <>
-        <form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}>
+        <Formik
+            initialValues={newEmail}
+            validationSchema={composeSchema}
+            onSubmit={handleSendEmail}
+        >
+            {({ errors, touched }) => (
 
-            <div className="new-message">
-                <p className={"new-message-title-" + viewMode} >New Message</p>
+                <Form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}
+                >
 
-                <p onClick={() => onChangeViewMode('minimized')}
-                    className={"new-message-minimized"}>
-                    <span> <MinimizeOutlinedIcon fontSize="small" title="minimized" /></span>
+                    <div className="new-message">
+                        <p className={"new-message-title-" + viewMode} >New Message</p>
 
-                </p >
+                        <p onClick={() => onChangeViewMode('minimized')}
+                            className={"new-message-minimized"}>
+                            <span> <MinimizeOutlinedIcon fontSize="small" title="minimized" /></span>
 
-                <p onClick={() => onChangeViewMode('fullscreen')}
-                    className="new-message-fullscreen">
-                    {viewMode === 'fullscreen' ? (
-                        <CloseFullscreenOutlinedIcon fontSize="small" title="close-fullscreen" />
-                    ) : (
-                        <OpenInFullOutlinedIcon fontSize="small" title="fullscreen" />
-                    )}
-                </p >
+                        </p >
 
-                <p onClick={handleClose}
-                    className="new-message-close-btn">
-                    <CloseOutlinedIcon fontSize="small" title="save & close" />
-                </p >
-            </div>
+                        <p onClick={() => onChangeViewMode('fullscreen')}
+                            className="new-message-fullscreen">
+                            {viewMode === 'fullscreen' ? (
+                                <CloseFullscreenOutlinedIcon fontSize="small" title="close-fullscreen" />
+                            ) : (
+                                <OpenInFullOutlinedIcon fontSize="small" title="fullscreen" />
+                            )}
+                        </p >
 
-            <div className="new-message-recipients">
-                <label htmlFor="to">Recipients: </label>
-                <input className="input-recipients" type="email" name="to" value={newEmail.to} onChange={handleChange} />
-            </div>
+                        <p onClick={handleClose}
+                            className="new-message-close-btn">
+                            <CloseOutlinedIcon fontSize="small" title="save & close" />
+                        </p >
+                    </div>
 
-            <div className="new-message-subject">
-                <label htmlFor="subject">Subject: </label>
-                <input className="input-subject" id="subject" type="text" name="subject" value={newEmail.subject} onChange={handleChange} />
-            </div>
+                    <div className="new-message-recipients">
+                        <label htmlFor="to">Recipients: </label>
+                        <Field className="input-recipients" name="to" type="email" id="to" value={newEmail.to} onChange={handleChange} />
+                        {errors.to && touched.to ? (
+                            <div className="error">{errors.to}</div>
+                        ) : (null)}
+                    </div>
+                    <div className="new-message-subject">
+                        <label htmlFor="subject">Subject: </label>
+                        <Field className="input-subject" name="subject" id="subject" value={newEmail.subject} onChange={handleChange} />
+                        {errors.subject && touched.subject && (
+                            <div className="error">{errors.to}</div>
+                        )}
+                    </div>
 
-            <div className="body-input-container">
-                <input className="body-input" id="body" type="text" name="body" value={newEmail.body} onChange={handleChange} />
-            </div>
-            {isOpen &&
-                <div className="map">
-                    <UserLocation getUserLocation={getUserLocation} />
-                </div>
-            }
-            <p onClick={onToggle} className="add-location" title="add location"><AddLocationOutlinedIcon /></p>
-            <button className="new-message-send-btn">Send</button>
+                    <div className="body-input-container">
+                        <Field className="body-input" name="body" value={newEmail.body} onChange={handleChange} />
+                        {errors.body && touched.body && (
+                            <div className="error">{errors.body}</div>
+                        )}
+                    </div>
+                    {isOpen &&
+                        <div className="map">
+                            <UserLocation getUserLocation={getUserLocation} />
+                        </div>
+                    }
+                    <p onClick={onToggle} className="add-location" title="add location"><AddLocationOutlinedIcon /></p>
+                    <button type="submit" className="new-message-send-btn">Send</button>
 
 
-        </form>
+                </Form>
+            )}
+
+        </Formik>
     </>
 }

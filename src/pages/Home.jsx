@@ -13,6 +13,9 @@ export function Home() {
             < div>
                 <Link to={`/about`}>about</Link>
             </div>
+            <div>
+                <Link to='emails/chart'>Chart</Link>
+            </div>
         </section>
     )
 }

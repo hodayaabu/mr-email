@@ -14,7 +14,9 @@ export const emailService = {
     getFilterFromParams,
     getEmailShape,
     getUnreadCount,
-    getDraftCount
+    getDraftCount,
+    getAllCounts
+
 }
 
 const loggedinUser = {
@@ -29,7 +31,7 @@ _createEmails()
 async function query(filterBy = null) {
     let emails = await storageService.query(STORAGE_KEY)
     if (!filterBy) return emails
-    const { searchMail, dosentHasWords, subject, body, from, to, isRead, sentAt, folderName } = filterBy
+    const { searchMail, dosentHasWords, subject, body, from, to, isRead, sentAt, folderName, isStarred } = filterBy
 
     if (searchMail) {
         const lowerCaseSearchString = searchMail.toLowerCase()
@@ -65,6 +67,12 @@ async function query(filterBy = null) {
     if (isRead !== null && isRead !== undefined && isRead !== 'null') {
         emails = emails.filter(email =>
             email.isRead === filterBy.isRead
+        )
+    }
+
+    if (isStarred !== null && isStarred !== undefined && isStarred !== 'null') {
+        emails = emails.filter(email =>
+            email.isStarred === filterBy.isStarred
         )
     }
 
@@ -153,7 +161,8 @@ function getDefaultFilter() {
         searchMail: '',
         sentAt: '',
         isRead: null,
-        folderName: null
+        folderName: null,
+        isStarred: null
     }
 }
 
@@ -202,6 +211,42 @@ async function getDraftCount() {
         email.isDraft
     ))
     return drafts.length
+}
+
+async function getStarredCount() {
+    const filterBy = getDefaultFilter()
+    const emails = await query(filterBy)
+    const starred = emails.filter((email) => (
+        email.isStarred
+    ))
+    return starred.length
+}
+
+async function getInboxCount() {
+    const filterBy = getDefaultFilter()
+    filterBy.to = loggedinUser.email
+    const emails = await query(filterBy)
+    return emails.length
+
+}
+
+async function getSentCount() {
+    const filterBy = getDefaultFilter()
+    filterBy.from = loggedinUser.email
+    const emails = await query(filterBy)
+    return emails.length
+}
+
+async function getAllCounts() {
+    const unRead = await getUnreadCount();
+    const starred = await getStarredCount();
+    const drafts = await getDraftCount()
+    const inbox = await getInboxCount()
+    const sent = await getSentCount()
+
+    const counts = [unRead, starred, drafts, inbox, sent]
+
+    return counts
 }
 
 function _createEmails() {
