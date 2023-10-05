@@ -5,7 +5,7 @@
 @import "basics/animations.css";
 
 /* Pages */
-@import "./pages/Home.css";
+@import "./pages/home.css";
 @import "./pages/EmailIndex.css";
 @import "./pages/EmailDetails.css";
 @import "./pages//Footer.css";
