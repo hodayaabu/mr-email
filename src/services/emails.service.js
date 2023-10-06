@@ -31,30 +31,21 @@ _createEmails()
 async function query(filterBy = null) {
     let emails = await storageService.query(STORAGE_KEY)
     if (!filterBy) return emails
-    const { searchMail, dosentHasWords, subject, body, from, to, isRead, sentAt, folderName, isStarred } = filterBy
+
+    const { searchMail, dosentHasWords, subject, body = '', from, to, isRead, sentAt, folderName, isStarred } = filterBy
 
     if (searchMail) {
-        const lowerCaseSearchString = searchMail.toLowerCase()
+        const lowerCaseStr = searchMail.toLowerCase()
 
         emails = emails.filter(email =>
-            email.subject.toLowerCase().includes(lowerCaseSearchString)
-            || email.body.toLowerCase().includes(lowerCaseSearchString)
-            || email.from.toLowerCase().includes(lowerCaseSearchString)
-            || email.to.toLowerCase().includes(lowerCaseSearchString)
-        )
+        (email.subject.toLowerCase().includes(lowerCaseStr)
+            || email.body.toLowerCase().includes(lowerCaseStr)
+            || email.from.toLowerCase().includes(lowerCaseStr)
+            || email.to.toLowerCase().includes(lowerCaseStr)))
+
     }
 
-    if (dosentHasWords) {
-
-        emails = emails.filter(email =>
-            !email.subject.toLowerCase().includes(dosentHasWords)
-            || !email.body.toLowerCase().includes(dosentHasWords)
-            || !email.from.toLowerCase().includes(dosentHasWords)
-            || !email.to.toLowerCase().includes(dosentHasWords)
-        )
-    }
-
-    if (filterBy) {
+    if (body || from || subject || to) {
 
         emails = emails.filter(email =>
             email.subject.toLowerCase().includes(subject.toLowerCase())
@@ -76,6 +67,38 @@ async function query(filterBy = null) {
         )
     }
 
+    if (folderName) {
+        emails = emails.filter((email) => {
+
+            switch (folderName) {
+                case 'inbox':
+                    return (
+                        email.to === _getLoggedInUser().email &&
+                        email.removedAt === null
+                    )
+                case 'sent':
+                    return (
+                        email.sentAt !== null &&
+                        email.from === _getLoggedInUser().email &&
+                        !email.isDraft &&
+                        email.removedAt === null
+                    )
+                case 'drafts':
+                    return (
+                        email.isDraft &&
+                        email.removedAt === null)
+                case 'all':
+                    return email.sentAt != null
+                case 'starred':
+                    return (
+                        email.isStarred && email.removedAt === null)
+                case 'trash':
+                    return email.removedAt !== null
+            }
+        })
+    }
+
+    // dosent work yet
     function sameDay(d1, d2) {
         return d1.getFullYear() === d2.getFullYear() &&
             d1.getMonth() === d2.getMonth() &&
@@ -91,31 +114,17 @@ async function query(filterBy = null) {
         return emails
     }
 
-    if (folderName) {
-        emails = emails.filter((email) => {
+    if (dosentHasWords) {
+        const lowerCaseStr = dosentHasWords.toLowerCase()
 
-            switch (folderName) {
-                case 'inbox':
-                    return (
-                        email.to === _getLoggedInUser().email
-                    )
-                case 'sent':
-                    return (
-                        email.sentAt !== null &&
-                        email.from === _getLoggedInUser().email &&
-                        !email.isDraft
-                    )
-                case 'drafts':
-                    return email.isDraft
-                case 'all':
-                    return email.sentAt != null
-                case 'starred':
-                    return email.isStarred
-                case 'trash':
-                    return email.removedAt !== null
-            }
-        })
+        emails = emails.filter(email =>
+            !email.subject.toLowerCase().includes(lowerCaseStr)
+            || !email.body.toLowerCase().includes(lowerCaseStr)
+            || !email.from.toLowerCase().includes(lowerCaseStr)
+            || !email.to.toLowerCase().includes(lowerCaseStr)
+        )
     }
+
     return emails
 }
 
@@ -135,7 +144,7 @@ function save(emailToSave) {
     }
 }
 
-function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), removedAt, to = "", location = "") {
+function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), to = "", location = "") {
     const email = {
         id,
         subject,
@@ -144,7 +153,7 @@ function createEmail(id = '', subject = "", body = "", sentAt = Date.now(), remo
         isStarred: false,
         sentAt,
         isDraft: false,
-        removedAt,
+        removedAt: null,
         from: loggedinUser.email,
         to,
         location,

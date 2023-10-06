@@ -8,15 +8,19 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 //components
 import { Logo } from "../comps/Logo";
 import { EmailList } from "../comps/EmailList";
+import { EmailDetails } from "./EmailDetails";
 import { EmailFilter } from "../comps/EmailFilter";
 import { EmailFolders } from "../comps/EmailFolders";
 
 export function EmailIndex() {
-    const [emails, setEmails] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
     const [unreadCount, setUnreadCount] = useState(0)
     const [draftCount, setDraftCount] = useState(0)
+    const selectedEmail = searchParams.get('emailId')
+
     const params = useParams()
     const navigate = useNavigate()
 
@@ -57,10 +61,11 @@ export function EmailIndex() {
     }
 
     async function onRemoveEmail(emailId) {
+
         try {
             let email = await emailService.getById(emailId)
 
-            if (email.removedAt) {
+            if (email.removedAt !== null) {
                 await emailService.remove(emailId)
                 setEmails((prevEmails) => prevEmails.filter(email => email.id !== emailId))
                 showSuccessMsg('Successfully deleted')
@@ -106,10 +111,8 @@ export function EmailIndex() {
             <EmailFilter onSetFilter={onSetFilter} filterBy={filterBy} />
             <EmailFolders onComposeClick={onComposeClick} unreadCount={unreadCount} draftCount={draftCount} emails={emails} />
             <section className="email-index-main">
-                <div className="email-list-top"></div>
-                <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />
-                <div className="email-list-bottom"></div>
-
+                {selectedEmail && <EmailDetails emailId={selectedEmail} />}
+                {!selectedEmail && <EmailList emails={emails} onRemove={onRemoveEmail} onUpdateEmail={onUpdateEmail} />}
             </section>
             <Outlet context={{ onSendEmail }} />
         </div>

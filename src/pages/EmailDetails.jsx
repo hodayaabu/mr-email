@@ -1,34 +1,28 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router"
+import { Link } from "react-router-dom";
 import GoogleMapReact from 'google-map-react';
 
 //Services
-import { utilService } from "../services/util.service";
 import { emailService } from "../services/emails.service";
 import { showErrorMsg } from "../services/event-bus.service";
+import { useParams } from "react-router";
 
-export function EmailDetails() {
+export function EmailDetails({ emailId }) {
     const [email, setEmail] = useState(null)
-    const params = useParams()
-    const navigate = useNavigate()
-    const location = useLocation()
+    const { folderName } = useParams()
 
     useEffect(() => {
         loadEmail()
-    }, [params.emailId])
-
-    function handleGoBack() {
-        navigate(utilService.getContainingFolder(location.pathname))
-    }
+    }, [emailId])
 
     async function loadEmail() {
         try {
-            let email = await emailService.getById(params.emailId)
+            let email = await emailService.getById(emailId)
+            setEmail(email)
+
             email = { ...email, isRead: true }
             await emailService.save(email)
-            setEmail(email)
         } catch (err) {
-            handleGoBack()
             showErrorMsg('Had issues loading email');
             console.log('Had issues loading email', err);
         }
@@ -52,8 +46,7 @@ export function EmailDetails() {
                         />
                     </div>
                 </div>}
-            <button onClick={handleGoBack}>Go back</button>
-
+            <Link to={`/emails/${folderName}`}>Go back</Link>
         </section>
     )
 }

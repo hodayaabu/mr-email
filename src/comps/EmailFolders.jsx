@@ -22,7 +22,6 @@ export function EmailFolders({ onComposeClick, unreadCount, draftCount }) {
     { id: 5, name: "Trash", icon: <DeleteOutlineIcon fontSize="small" /> },
   ];
 
-
   function setActiveFolder(name) {
     navigate(`/emails/${name.toLowerCase()}`)
     setActive(name);
@@ -46,8 +45,10 @@ export function EmailFolders({ onComposeClick, unreadCount, draftCount }) {
           onClick={() => setActiveFolder(folder.name)}
         >
           {folder.icon}
+
           <p className={active === folder.name ? "active" : ""}>
             {folder.name}
+
             <span className="emails-count">
               {folder.count
                 ? folder.count

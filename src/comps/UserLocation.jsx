@@ -6,8 +6,8 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 export function UserLocation({ getUserLocation }) {
 
-    const [coordinates, setCoordinates] = useState({ lat: 33.0833, lng: 34.7818 })
-    const zoom = 16
+    const [coordinates, setCoordinates] = useState()
+    const zoom = 13
 
     useEffect(() => {
         getPosition()
@@ -22,7 +22,6 @@ export function UserLocation({ getUserLocation }) {
     }
 
     function showLocation(position) {
-        console.log(position);
         const lat = position.coords.latitude
         const lng = position.coords.longitude
         getUserLocation({ lat, lng })
@@ -36,14 +35,14 @@ export function UserLocation({ getUserLocation }) {
     function onHandleClick({ lat, lng }) {
         setCoordinates({ lat, lng })
     }
-    console.log(coordinates);
+
     return (
-        // Important! Always set the container height explicitly
         <div style={{ height: '150px', width: '100%' }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: "AIzaSyCju_hmhNCmyKS7cwa8YtAjNkO7ZPz4XmU" }}
                 center={coordinates}
                 defaultZoom={zoom}
+                defaultCenter={{ lat: 32.0822, lng: 34.7818 }}
                 onClick={onHandleClick}
             >
                 <AnyReactComponent

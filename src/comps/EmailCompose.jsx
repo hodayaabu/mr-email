@@ -20,15 +20,15 @@ import { useToggle } from "../customHooks/useToggle";
 
 export function EmailCompose() {
     const [newEmail, setNewEmail] = useState(emailService.createEmail())
-    const [userLocation, setUserLocation] = useState(null)
+    const [coordinates, setCoordinates] = useState({ lat: 32, lng: 33 })
     const [searchParams, setSearchParams] = useSearchParams()
     const [viewMode, setViewMode] = useState('normal')
     const [isOpen, onToggle] = useToggle()
-    console.log(userLocation);
+
     const to = searchParams.get('to');
     const subject = searchParams.get('subject');
 
-    const { emailId } = useParams();
+    const { emailId, folderName } = useParams();
     const { onSendEmail } = useOutletContext()
 
     const location = useLocation()
@@ -67,12 +67,10 @@ export function EmailCompose() {
     }
 
     function handleSendEmail() {
-        const emailToSend = { ...newEmail, isDraft: false, location: userLocation }
+        const emailToSend = { ...newEmail, isDraft: false, location: coordinates }
         onSendEmail(emailToSend)
-        navigate(utilService.getContainingFolder(location.pathname))
-        setNewEmail(emailService.createEmail())
-        setSearchParams(null)
-        setUserLocation('')
+        setSearchParams(emailService.getFilterFromParams(searchParams))
+        navigate(`/emails/${folderName}`)
         showSuccessMsg('Email sent successfully')
     }
 
@@ -93,16 +91,13 @@ export function EmailCompose() {
     }
 
     function getUserLocation({ lat, lng }) {
-        setUserLocation({ lat, lng })
+        setCoordinates({ lat, lng })
     }
-    // setTimeout(() => {
-    //     onSaveDraft()
-    // }, 5000);
 
     const composeSchema = Yup.object().shape({
         to: Yup.string()
-            .min(2, 'Too Short!')
             .required('Required')
+            .min(2, 'Too Short!')
             .email('Invalid email'),
         subject: Yup.string()
             .min(2, 'Too Short!')
@@ -114,12 +109,11 @@ export function EmailCompose() {
         <Formik
             initialValues={newEmail}
             validationSchema={composeSchema}
-            onSubmit={handleSendEmail}
         >
-            {({ errors, touched }) => (
+            {({ errors, touched }) => {
+                console.log(errors, touched, newEmail)
 
-                <Form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}
-                >
+                return <Form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}>
 
                     <div className="new-message">
                         <p className={"new-message-title-" + viewMode} >New Message</p>
@@ -148,9 +142,9 @@ export function EmailCompose() {
                     <div className="new-message-recipients">
                         <label htmlFor="to">Recipients: </label>
                         <Field className="input-recipients" name="to" type="email" id="to" value={newEmail.to} onChange={handleChange} />
-                        {errors.to && touched.to ? (
+                        {(errors.to && touched.to) && (
                             <div className="error">{errors.to}</div>
-                        ) : (null)}
+                        )}
                     </div>
                     <div className="new-message-subject">
                         <label htmlFor="subject">Subject: </label>
@@ -162,7 +156,7 @@ export function EmailCompose() {
 
                     <div className="body-input-container">
                         <Field className="body-input" name="body" value={newEmail.body} onChange={handleChange} />
-                        {errors.body && touched.body && (
+                        {(errors.body && touched.body) && (
                             <div className="error">{errors.body}</div>
                         )}
                     </div>
@@ -176,7 +170,8 @@ export function EmailCompose() {
 
 
                 </Form>
-            )}
+            }
+            }
 
         </Formik>
     </>

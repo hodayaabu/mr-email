@@ -22,12 +22,13 @@ export function useForm(initialState, callBack) {
             case 'checkbox':
                 value = target.checked
                 break;
-            case 'isRead':
-                value = JSON.parse(value)
-                break;
             default:
-
         }
+
+        if (field === 'isRead') {
+            value = JSON.parse(value)
+        }
+
         setFields(prevFields => ({ ...prevFields, [field]: value }))
     }
 

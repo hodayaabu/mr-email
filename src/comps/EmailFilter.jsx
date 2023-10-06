@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import ClearIcon from '@mui/icons-material/Clear';
+import { emailService } from '../services/emails.service';
 // import { useForm } from '../customHooks/useForm';
 
 export function EmailFilter({ filterBy, onSetFilter }) {
@@ -42,7 +43,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
 
     function onClearFilter() {
         // handleChange(filterBy)
-        onSetFilter(filterBy)
+        setFilterByToEdit(emailService.getDefaultFilter())
         onCloseFilterOption()
     }
 
