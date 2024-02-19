@@ -34,4 +34,3 @@ Send New Email: Compose and send a new email with ease.
 Delete Email: Remove unwanted emails from the simulation.
 Filter Emails: Use filtering options to quickly find specific emails.
 
-We welcome contributions! If you would like to contribute to the mr-emai Site, please follow our contribution guidelines.
