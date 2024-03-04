@@ -1,9 +1,22 @@
-לשאול: גיטהבפייג'ס, count folder, sort date, ref undifinde, searchParams
+לשאול: גיטהבפייג'ס,
 
-לנסות שוב:
--search-params
+
+-לנקות search-params
 -sort bydate
+-cheeck all sorting
+-userLocation
 -draft saved any 10 sec
+-useForm
+-formik validation
+saidBar Button
 
-תרגול
-עיצוב
+-הערות קוד
+-לצמצם קוד
+
+-עיצוב:
+-email detailes
+-email list when subject is too long
+-when hover on folders
+-on sent folder-show to who you sending
+-onther email options
+-responsive

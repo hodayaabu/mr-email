@@ -22,6 +22,14 @@
     display: flex;
 }
 
+.compose-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    right: 20px;
+}
+
 img {
     width: 20px;
     height: 20px;

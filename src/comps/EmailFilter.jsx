@@ -50,16 +50,16 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     return <>
 
         <div className="search-outter-box">
-            <div className="search-box">
-                <span className="img-span--container">
+            <div className="search-box wrapper-search">
+                <div className="search-input">
                     <SearchIcon />
-                </span>
-                <input type="text"
-                    className="search-box"
-                    placeholder="Search mail"
-                    name="searchMail"
-                    onChange={handleChange}
-                    value={filterByToEdit.searchMail} />
+                    <input type="text"
+                        className="search-box"
+                        placeholder="Search mail"
+                        name="searchMail"
+                        onChange={handleChange}
+                        value={filterByToEdit.searchMail} />
+                </div>
                 <p className="option-btn" onClick={openOptions}><TuneIcon /></p>
             </div>
         </div>

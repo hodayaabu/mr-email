@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 
 //Services
 import { emailService } from "../services/emails.service";
@@ -36,7 +36,7 @@ export function EmailDetails({ emailId }) {
             <h1>{email.subject}</h1>
             <h5>{email.from}</h5>
             <p>{email.body}</p>
-            {email.location &&
+            {/* {email.location &&
                 <div className="map">
                     <div style={{ height: '150px', width: '100%' }}>
                         <GoogleMapReact
@@ -45,7 +45,7 @@ export function EmailDetails({ emailId }) {
                             defaultZoom={16}
                         />
                     </div>
-                </div>}
+                </div>} */}
             <Link to={`/emails/${folderName}`}>Go back</Link>
         </section>
     )

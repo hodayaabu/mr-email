@@ -1,5 +1,6 @@
 .search-outter-box {
     grid-area: search;
+    margin-top: 19px;
     display: flex;
     width: 100%;
     height: 50px;
@@ -10,12 +11,17 @@
 }
 
 .search-box::placeholder {
-    color: #5e5e5e;
+    color: black;
+    font-size: 17px;
 }
 
 textarea:focus,
 input:focus {
     outline: none;
+}
+
+.wrapper-search {
+    padding: 15px;
 }
 
 .search-box {
@@ -26,9 +32,17 @@ input:focus {
     width: 75%;
     height: 48px;
     align-items: center;
+    justify-content: space-between;
     text-align: start;
     background-color: #e9f1fb;
     border: none;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
 }
 
 .sort {

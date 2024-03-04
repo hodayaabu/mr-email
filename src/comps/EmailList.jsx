@@ -7,7 +7,6 @@ import { EmailPreview } from "./EmailPreview";
 import { emailService } from '../services/emails.service';
 
 export function EmailList({ emails, onRemove, onUpdateEmail }) {
-    console.log(emails);
     return (
         <ul className="email-list">
             {

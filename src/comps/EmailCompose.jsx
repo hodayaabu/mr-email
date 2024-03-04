@@ -118,37 +118,46 @@ export function EmailCompose() {
                     <div className="new-message">
                         <p className={"new-message-title-" + viewMode} >New Message</p>
 
-                        <p onClick={() => onChangeViewMode('minimized')}
-                            className={"new-message-minimized"}>
-                            <span> <MinimizeOutlinedIcon fontSize="small" title="minimized" /></span>
+                        <div className="compose-actions">
+                            <p onClick={() => onChangeViewMode('minimized')}
+                                className={"new-message-minimized"}>
+                                <span> <MinimizeOutlinedIcon fontSize="small" title="minimized" /></span>
 
-                        </p >
+                            </p >
 
-                        <p onClick={() => onChangeViewMode('fullscreen')}
-                            className="new-message-fullscreen">
-                            {viewMode === 'fullscreen' ? (
-                                <CloseFullscreenOutlinedIcon fontSize="small" title="close-fullscreen" />
-                            ) : (
-                                <OpenInFullOutlinedIcon fontSize="small" title="fullscreen" />
-                            )}
-                        </p >
+                            <p onClick={() => onChangeViewMode('fullscreen')}
+                                className="new-message-fullscreen">
+                                {viewMode === 'fullscreen' ? (
+                                    <CloseFullscreenOutlinedIcon fontSize="small" title="close-fullscreen" />
+                                ) : (
+                                    <OpenInFullOutlinedIcon fontSize="small" title="fullscreen" />
+                                )}
+                            </p >
 
-                        <p onClick={handleClose}
-                            className="new-message-close-btn">
-                            <CloseOutlinedIcon fontSize="small" title="save & close" />
-                        </p >
+                            <p onClick={handleClose}
+                                className="new-message-close-btn">
+                                <CloseOutlinedIcon fontSize="small" title="save & close" />
+                            </p >
+                        </div>
                     </div>
 
                     <div className="new-message-recipients">
                         <label htmlFor="to">Recipients: </label>
-                        <Field className="input-recipients" name="to" type="email" id="to" value={newEmail.to} onChange={handleChange} />
-                        {(errors.to && touched.to) && (
-                            <div className="error">{errors.to}</div>
-                        )}
+
+                        <Field
+                            autoFocus={false}
+                            className="input-recipients"
+                            name="to" type="email"
+                            id="to"
+                            value={newEmail.to}
+                            onChange={handleChange}
+                        />
+
+                        {errors.to && <div className="error">{errors.to}</div>}
                     </div>
                     <div className="new-message-subject">
                         <label htmlFor="subject">Subject: </label>
-                        <Field className="input-subject" name="subject" id="subject" value={newEmail.subject} onChange={handleChange} />
+                        <Field autoFocus={false} className="input-subject" name="subject" id="subject" value={newEmail.subject} onChange={handleChange} />
                         {errors.subject && touched.subject && (
                             <div className="error">{errors.to}</div>
                         )}

@@ -30,14 +30,16 @@ export function EmailPreview({ email, onRemove, onUpdateEmail }) {
     return (
         <article className={"email-preview " + classNameRead} >
 
-            <input type="checkbox" name="1" className="email-checkbox" />
+            <div className='select-starr'>
+                <input type="checkbox" name="1" className="email-checkbox" />
 
-            <span onClick={() => onToggle('isStarred')}>
-                {isStarred ? (
-                    <StarIcon fontSize="small" sx={{ color: yellow[500] }} />) : (
-                    <StarBorderIcon fontSize="small" />
-                )}
-            </span>
+                <span onClick={() => onToggle('isStarred')}>
+                    {isStarred ? (
+                        <StarIcon fontSize="x-small" sx={{ color: yellow[500] }} />) : (
+                        <StarBorderIcon fontSize="x-small" />
+                    )}
+                </span>
+            </div>
 
             <Link to={directTo}>
                 <section className="wrapper" >
@@ -48,9 +50,13 @@ export function EmailPreview({ email, onRemove, onUpdateEmail }) {
                         <p className={"from " + classNameRead}>{from.split('@')[0]}</p>
                     )}
 
-                    <p className={"subject " + classNameRead}>{subject || "(no subject)"}</p>
-                    <p className="body">- {body}</p>
+                    <div>
+                        <p className={"subject " + classNameRead}>{subject || "(no subject)"}</p>
+                        <p className="body">- {body}</p>
+                    </div>
+
                     <span className="date">{new Date(sentAt).toLocaleDateString()}</span>
+
                 </section>
             </Link>
 

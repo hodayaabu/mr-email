@@ -1,21 +1,28 @@
 .email-preview {
     display: flex;
+    align-items: center;
+    gap: 10px;
     border-right: none;
     border-bottom: 0.4px solid gray;
     width: 100%;
     height: 30px;
     background-color: white;
-    ;
 }
 
 .email-preview:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.select-starr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .wrapper {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: auto 200px 1fr auto;
+    grid-template-columns: 500px 850px auto;
     column-gap: 15px;
     width: 100%;
     align-items: center;
@@ -52,13 +59,6 @@
 .draft {
     display: inline;
     margin: 1.5%;
-}
-
-.date {
-    float: right;
-    margin-right: 1%;
-    /* position: absolute;
-    right: 70px; */
 }
 
 .email-actions {

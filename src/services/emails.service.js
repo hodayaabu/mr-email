@@ -295,6 +295,17 @@ function _createEmails() {
                 from: 'momo@momo.com',
                 to: 'hodaya1abu@gmail.com'
             },
+            {
+                id: utilService.makeId(),
+                subject: 'Hello',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'momo@momo.com',
+                to: 'hodaya1abu@gmail.com'
+            },
 
         ]
         utilService.saveToStorage(STORAGE_KEY, emails)
