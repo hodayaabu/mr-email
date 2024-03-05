@@ -41,7 +41,7 @@ export function EmailPreview({ email, onRemove, onUpdateEmail }) {
                 </span>
             </div>
 
-            <Link to={directTo}>
+            <Link style={{ textDecoration: 'none' }} to={directTo}>
                 <section className="wrapper" >
 
                     {isDraft ? (
@@ -52,7 +52,11 @@ export function EmailPreview({ email, onRemove, onUpdateEmail }) {
 
                     <div>
                         <p className={"subject " + classNameRead}>{subject || "(no subject)"}</p>
-                        <p className="body">- {body}</p>
+                        {body.length <= 60 ? (
+                            <p className="body">- {body}</p>
+                        ) : (
+                            <p className="body">- {body.substring(0, 17) + '...'}</p>
+                        )}
                     </div>
 
                     <span className="date">{new Date(sentAt).toLocaleDateString()}</span>

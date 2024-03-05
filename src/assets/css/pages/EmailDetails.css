@@ -1,7 +1,39 @@
 .email-details {
-    background-color: white;
-    padding: 20px;
-    height: 400px;
-    text-align: center;
-    width: 400px;
+    padding: 6px;
+}
+
+.action-btn {
+    margin-right: 20px;
+}
+
+.sub-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.email-details-subject {
+    font-size: 50px;
+    padding: 40px;
+}
+
+.email-details-from-name,
+.email-details-from {
+    display: inline;
+    margin: 5px;
+}
+
+.email-details-from-name {
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 35px;
+}
+
+.email-details-date {
+    margin-right: 50px;
+}
+
+.email-details-body {
+    margin: 40px;
+    font-size: 20px;
 }

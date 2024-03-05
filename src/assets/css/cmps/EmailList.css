@@ -1,7 +1,6 @@
 .email-list {
     border-radius: 4%;
     margin-top: 10px;
-    overflow-y: scroll;
     padding-inline-start: 10px;
 }
 
