@@ -96,7 +96,7 @@ export function EmailCompose() {
 
     const composeSchema = Yup.object().shape({
         to: Yup.string()
-            .required('Required')
+            // .required('Required')
             .min(2, 'Too Short!')
             .email('Invalid email'),
         subject: Yup.string()
@@ -111,7 +111,6 @@ export function EmailCompose() {
             validationSchema={composeSchema}
         >
             {({ errors, touched }) => {
-                console.log(errors, touched, newEmail)
 
                 return <Form className={"compose-main-container " + viewMode} onSubmit={handleSendEmail}>
 
@@ -151,20 +150,21 @@ export function EmailCompose() {
                             id="to"
                             value={newEmail.to}
                             onChange={handleChange}
+                            autocomplete="off"
                         />
 
                         {errors.to && <div className="error">{errors.to}</div>}
                     </div>
                     <div className="new-message-subject">
                         <label htmlFor="subject">Subject: </label>
-                        <Field autoFocus={false} className="input-subject" name="subject" id="subject" value={newEmail.subject} onChange={handleChange} />
+                        <Field autocomplete="off" className="input-subject" name="subject" id="subject" value={newEmail.subject} onChange={handleChange} />
                         {errors.subject && touched.subject && (
                             <div className="error">{errors.to}</div>
                         )}
                     </div>
 
                     <div className="body-input-container">
-                        <Field className="body-input" name="body" value={newEmail.body} onChange={handleChange} />
+                        <Field className="body-input" name="body" value={newEmail.body} onChange={handleChange} autocomplete="off" />
                         {(errors.body && touched.body) && (
                             <div className="error">{errors.body}</div>
                         )}

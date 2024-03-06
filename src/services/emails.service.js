@@ -306,6 +306,270 @@ function _createEmails() {
                 from: 'momo@momo.com',
                 to: 'hodaya1abu@gmail.com'
             },
+            {
+                id: utilService.makeId(),
+                subject: 'Thanks for your recent interest in joining us at Sensi.ai',
+                body: "Hi hodaya, Thank you for your recent interest in joining us at Sensi.ai. Unfortunately, the Full Stack Developer opportunity for which you were under consideration is no longer open. We’d love to be in touch regarding future openings at Sensi.Ai! Feel free to check out our new opportunities on our career website or LinkedIn page.Kind regards, Sensi.ai Hiring Team",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'LinkedIn@momo.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hey!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'hodaya@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hi hodaya',
+                body: "Thank you for your recent interest in joining us at Sensi.ai. Unfortunately, the Full Stack Developer opportunity for which you were under consideration is no longer open. We’d love to be in touch regarding future openings at Sensi.Ai! Feel free to check out our new opportunities on our career website or LinkedIn page.Kind regards, Sensi.ai Hiring Team",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'david@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hi hodaya, a notification from linkedin',
+                body: "Navigating career breaks, celebrating International Women’s Day and the perks of exercising at work",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'linkedin@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Intro to Data Modeling on March 13th',
+                body: "A frequently asked question in the MongoDB community is “I’m designing an application to do X, how do I model the data? In this webinar on Wednesday, March 13th at 11 A.M. ET we will examine the most important considerations when making decisions about your data model, so that you can create the model that best fits your application.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'mongodbteam@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'back end developer”: Deloitte Back End Developer and more',
+                body: "Your job alert for back end developer In this webinar on Wednesday, March 13th at 11 A.M. ET we will examine the most important considerations when making decisions about your data model, so that you can create the model that best fits your application.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'linkedin@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'You have points in your account that you have not yet redeemed',
+                body: "You have points in your account that you have not yet redeemed",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'FRÉ@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'LinkedIn News via LinkedI',
+                body: "Make space for people to reveal themselves.” How former Secret Service Agent Evy Poumpouras learned to spot a liar.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'linkedin@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hey!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'hodaya@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'BA',
+                body: "Greetings,We are glad that you chose to study at Ben Gurion University and thank you for your interest in the Faculty of Humanities and Social Sciences.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'Rishum@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'You have points in your account that you have not yet redeemed',
+                body: "You have points in your account that you have not yet redeemed",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'FRÉ@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'back end developer”: Deloitte Back End Developer and more',
+                body: "Your job alert for back end developer In this webinar on Wednesday, March 13th at 11 A.M. ET we will examine the most important considerations when making decisions about your data model, so that you can create the model that best fits your application.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'linkedin@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hi hodaya',
+                body: "Thank you for your recent interest in joining us at Sensi.ai. Unfortunately, the Full Stack Developer opportunity for which you were under consideration is no longer open. We’d love to be in touch regarding future openings at Sensi.Ai! Feel free to check out our new opportunities on our career website or LinkedIn page.Kind regards, Sensi.ai Hiring Team",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'david@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Hey!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'hodaya@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'You have points in your account that you have not yet redeemed',
+                body: "You have points in your account that you have not yet redeemed",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'FRÉ@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'back end developer”: Deloitte Back End Developer and more',
+                body: "Your job alert for back end developer In this webinar on Wednesday, March 13th at 11 A.M. ET we will examine the most important considerations when making decisions about your data model, so that you can create the model that best fits your application.",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'linkedin@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'You have points in your account that you have not yet redeemed',
+                body: "You have points in your account that you have not yet redeemed",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'FRÉ@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'Miss you!',
+                body: 'Would love to catch up sometimes',
+                isRead: false,
+                isStarred: false,
+                sentAt: 1551133930594,
+                removedAt: null, //for later use
+                from: 'shay@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
+            {
+                id: utilService.makeId(),
+                subject: 'You have points in your account that you have not yet redeemed',
+                body: "You have points in your account that you have not yet redeemed",
+                isRead: false,
+                isStarred: false,
+                sentAt: 15511339305999,
+                removedAt: null, //for later use
+                from: 'FRÉ@gmail.com',
+                to: 'hodaya1abu@gmail.com'
+            },
 
         ]
         utilService.saveToStorage(STORAGE_KEY, emails)
