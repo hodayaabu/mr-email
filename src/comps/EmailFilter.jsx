@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 //icons
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
-import ClearIcon from '@mui/icons-material/Clear';
 import { emailService } from '../services/emails.service';
 // import { useForm } from '../customHooks/useForm';
 
@@ -65,7 +63,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         </div>
 
         <form className={"email-filter-options " + dynClass} onSubmit={onSubmitFilter}>
-            <Link className="close-options-btn" onClick={onCloseFilterOption}><ClearIcon fontSize='small' /></Link>
             <div className='filter-options' >
 
                 <div className="option">
@@ -92,53 +89,18 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                         value={filterByToEdit.subject} />
                 </div>
 
-                <div className="option">
-                    <label htmlFor="search">Has the words</label>
-                    <input type="text"
-                        id='search'
-                        name="searchMail"
-                        onChange={handleChange}
-                        value={filterByToEdit.searchMail} />
-                </div>
+                <div className='filter-footer'>
+                    <div className="sortRead">
+                        <select name='isRead' onChange={handleChange} >
+                            <option value='true'>Read Emails</option>
+                            <option value='false'>UnRead Emails</option>
+                            <option value='null'>All</option>
+                        </select>
+                    </div>
 
-                <div className="option">
-                    <label htmlFor="dosnt-have">Doesnt have</label>
-                    <input type="text"
-                        id='dosnt-have'
-                        name="dosentHasWords"
-                        onChange={handleChange}
-                        value={filterByToEdit.dosentHasWords} />
+                    <button type='submit' className='search-btn' >search</button>
+                    <p className='clear-filter' onClick={onClearFilter} >Clear filter</p>
                 </div>
-
-                <div className="option">
-                    <label htmlFor="sentAt">Date within</label>
-                    <input type="date"
-                        id='sentAt'
-                        name="sentAt"
-                        onChange={handleChange}
-                        value={filterByToEdit.sentAt} />
-                </div>
-
-                <div className="option">
-                    <label htmlFor="search">Search</label>
-                    <input type="text"
-                        placeholder='All Mail'
-                        id='search'
-                        name="searchMail"
-                        onChange={handleChange}
-                        value={filterByToEdit.searchMail} />
-                </div>
-
-                <div className="sortRead">
-                    <select name='isRead' onChange={handleChange} >
-                        <option value='true'>Read Emails</option>
-                        <option value='false'>UnRead Emails</option>
-                        <option value='null'>All</option>
-                    </select>
-                </div>
-
-                <button type='submit' className='search-btn' >search</button>
-                <p className='clear-filter' onClick={onClearFilter} >Clear filter</p>
 
             </div>
         </form>

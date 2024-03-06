@@ -57,14 +57,13 @@ input:focus {
 .email-filter-options {
     display: none;
     position: fixed;
-    top: 70px;
-    right: 270px;
+    top: 85px;
+    left: 38%;
     z-index: 3;
     overflow: hidden;
     background-color: #fff;
-    height: 75%;
     padding: 20px;
-    width: 58%;
+    width: 40%;
     box-shadow: #0656d0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -74,16 +73,23 @@ input:focus {
     flex-direction: column;
 }
 
-.close-options-btn {
-    margin-left: 95%;
+.option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 20px;
 }
 
 .option>input {
     border: none;
     border-bottom: 1px solid rgb(223, 222, 222);
-    width: 75%;
+    width: 100%;
     overflow: scroll;
     margin: 10px;
+}
+
+.filter-footer {
+    margin-top: 25px;
 }
 
 .search-btn {
@@ -93,11 +99,12 @@ input:focus {
     background-color: #0656d0;
     width: 100px;
     height: 40px;
-    padding: 10px;
+    padding: 0 20px;
     bottom: 10px;
     border: none;
     border-radius: 10px;
-    font-weight: bold;
+    font-weight: 450;
+    font-size: 16px;
 }
 
 .clear-filter {
